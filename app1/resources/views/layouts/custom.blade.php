@@ -87,6 +87,9 @@
                 @yield('content')
             </main>
         </div>
+
+         @yield('pagespecificscripts')
     </body>
 
+   
 </html>

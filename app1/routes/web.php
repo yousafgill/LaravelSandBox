@@ -25,3 +25,5 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/employees/index','EmployeeController@index')->name('index');
 Route::get('/employees/create','EmployeeController@create')->name('create');
 Route::post('/employees/createsave','EmployeeController@createsave')->name('createsave');
+
+Route::get('/invoices/getjson','InvoiceController@getjson')->name('getjson');

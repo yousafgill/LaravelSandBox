@@ -25,3 +25,7 @@
     </div>
 </div>
 @endsection
+
+@section('pagespecificscripts')
+<script src="{{ asset('js/myfunctions.js') }}"></script>
+@stop
