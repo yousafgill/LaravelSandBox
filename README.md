@@ -1,4 +1,4 @@
-## Welcome to GitHub Pages
+## Welcome to Laravel Sandbox
 
 You can use the [editor on GitHub](https://github.com/yousafgill/LaravelSandBox/edit/master/README.md) to maintain and preview the content for your website in Markdown files.
 
