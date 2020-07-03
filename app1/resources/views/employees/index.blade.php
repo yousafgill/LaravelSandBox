@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.custom')
 
 @section('content')
 <div class="container">
@@ -9,11 +9,15 @@
 
                 <div class="card-body">
                     @if (session('status'))
-                        <div class="alert alert-success" role="alert">
-                            {{ session('status') }}
-                        </div>
+                    <div class="alert alert-success" role="alert">
+                        {{ session('status') }}
+                    </div>
                     @endif
-
+                    <ul>
+                        @foreach($employees as $emp)
+                        <li>{{$emp->firstname}}</li>
+                        @endforeach
+                    </ul>
                     {{ __('Employees List Goes here') }}
                 </div>
             </div>

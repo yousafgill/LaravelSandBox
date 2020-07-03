@@ -23,3 +23,5 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 //Employees Route
 Route::get('/employees/index','EmployeeController@index')->name('index');
+Route::get('/employees/create','EmployeeController@create')->name('create');
+Route::post('/employees/createsave','EmployeeController@createsave')->name('createsave');
