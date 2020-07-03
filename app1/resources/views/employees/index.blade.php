@@ -15,10 +15,10 @@
                     @endif
                     <ul>
                         @foreach($employees as $emp)
-                        <li>{{$emp->firstname}}</li>
+                        <li>{{$emp->firstname}} {{$emp->lastname}}</li>
                         @endforeach
                     </ul>
-                    {{ __('Employees List Goes here') }}
+                    <a href="{{ url('/employees/create') }}">New</a>
                 </div>
             </div>
         </div>
