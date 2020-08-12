@@ -4,11 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-use App\invoice;
-
-class InvoiceController extends Controller
+class HomeController extends Controller
 {
-     /**
+    /**
      * Create a new controller instance.
      *
      * @return void
@@ -18,15 +16,18 @@ class InvoiceController extends Controller
         $this->middleware('auth');
     }
 
- /**
+    /**
      * Show the application dashboard.
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
-    public function getjson()
+    public function index()
     {
-        $inv=invoice::with('customer')->get();
-        return \json_decode($inv);
+        return view('home');
     }
 
+    public function About()
+    {
+        return view('about');
+    }
 }
