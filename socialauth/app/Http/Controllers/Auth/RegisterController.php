@@ -64,10 +64,18 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        return User::create([
+        //$finduser=User::where(['email'=>$data['email']])->first();
+        //dd($finduser);
+        try {
+             return User::create([
             'name' => $data['name'],
             'email' => $data['email'],
+            'registered_with_email'=>true,
             'password' => Hash::make($data['password']),
         ]);
+        } catch (Exception $e) {
+             dd($e->getMessage());
+        }
+       
     }
 }

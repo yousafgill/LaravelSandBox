@@ -31,14 +31,34 @@ class GoogleController extends Controller
                 Auth::login($finduser);
                 return redirect('/home');
             } else {
-                $newUser = User::create([
+                
+                //Check if Email has already been taken but google_id is not registered yet
+                $findemail=User::where('email',$user->email)->first();
+                if($findemail){
+                    $ID =$findemail->id;
+                    $existinguser=User::where('id',$ID)->update([
+                    'google_id' => $user->id,
+                    'registered_with_google'=>true,
+                    ]);
+                    $googleuser = User::where('google_id', $user->id)->first();
+                    if($googleuser){
+                        Auth::login($googleuser);
+                        return redirect('/home');
+                    }
+                  
+                }else{
+                    $newUser = User::create([
                     'name' => $user->name,
                     'email' => $user->email,
                     'google_id' => $user->id,
-                    'password' => encrypt('123456dummy'),
-                ]);
-                Auth::login($newUser);
-                return redirect('/home');
+                    'registered_with_google'=>true,
+                    // 'password' => encrypt('123456dummy'),
+                    ]);
+                    Auth::login($newUser);
+                    return redirect('/home');
+                }
+
+               
             }
         } catch (Exception $e) {
             dd($e->getMessage());

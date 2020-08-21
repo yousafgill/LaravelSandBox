@@ -3,11 +3,15 @@
 namespace App;
 
 use Illuminate\Contracts\Auth\MustVerifyEmail;
-use Illuminate\Foundation\Auth\User as Authenticatable;
+//use Illuminate\Foundation\Auth\User as Authenticatable;
+use GoldSpecDigital\LaravelEloquentUUID\Foundation\Auth\User as Authenticatable;
+// use GoldSpecDigital\LaravelEloquentUUID\Database\Eloquent\Uuid;
 use Illuminate\Notifications\Notifiable;
 
+//Authenticatable
 class User extends Authenticatable
 {
+    
     use Notifiable;
 
     /**
@@ -16,7 +20,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password', 'google_id'
+        'name', 'email', 'password', 'google_id','facebook_id','is_admin','registered_with_email','registered_with_google','registered_with_facebook',
     ];
 
     /**
@@ -36,4 +40,25 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    /**
+     * The "type" of the auto-incrementing ID.
+     *
+     * @var string
+     */
+    protected $keyType = 'string';
+
+    /**
+     * Indicates if the IDs are auto-incrementing.
+     *
+     * @var bool
+     */
+    public $incrementing = false;
+
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
+    protected $guarded = ['id'];
 }
