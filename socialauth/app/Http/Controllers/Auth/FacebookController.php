@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Http\Controllers;
-use Illuminate\Http\Request;
 namespace App\Http\Controllers\Auth;
-use App\User;
 use App\Http\Controllers\Controller;
-use Socialite;
-use Exception;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
+use App\User;
 use Auth;
+use Exception;
+use Socialite;
 
 class FacebookController extends Controller
 {
@@ -29,15 +29,40 @@ class FacebookController extends Controller
     {
         try {
             $user = Socialite::driver('facebook')->user();
-            $create['name'] = $user->getName();
-            $create['email'] = $user->getEmail();
-            $create['facebook_id'] = $user->getId();
-            $userModel = new User;
-            $createdUser = $userModel->addNew($create);
-            Auth::loginUsingId($createdUser->id);
-            return redirect()->route('home');
+            $finduser = User::where('facebook_id', $user->id)->first();
+            if ($finduser) {
+                Auth::login($finduser);
+                return redirect('/home');
+            } else {
+                
+                //Check if Email has already been taken but google_id is not registered yet
+                $findemail=User::where('email',$user->email)->first();
+                if($findemail){
+                    $ID =$findemail->id;
+                    $existinguser=User::where('id',$ID)->update([
+                    'facebook_id' => $user->id,
+                    'registered_with_facebook'=>true,
+                    ]);
+                    $facebookuser = User::where('facebook_id', $user->id)->first();
+                    if($facebookuser){
+                        Auth::login($facebookuser);
+                        return redirect('/home');
+                    }
+                }else{
+                    $uuid = Str::uuid()->toString();
+                    $newUser = User::create([
+                    'name' => $user->name,
+                    'email' => $user->email,
+                    'facebook_id' => $user->id,
+                    'registered_with_facebook'=>true,
+                    'password' => Hash::make(encrypt($uuid)),
+                    ]);
+                    Auth::login($newUser);
+                    return redirect('/home');
+                }
+            }
         } catch (Exception $e) {
-            return redirect('auth/facebook');
+            dd($e->getMessage());
         }
     }
 }
