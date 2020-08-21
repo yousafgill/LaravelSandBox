@@ -1,6 +1,8 @@
 <?php
 namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
 use App\User;
 use Auth;
 use Exception;
@@ -47,12 +49,13 @@ class GoogleController extends Controller
                     }
                   
                 }else{
+                    $uuid = Str::uuid()->toString();
                     $newUser = User::create([
                     'name' => $user->name,
                     'email' => $user->email,
                     'google_id' => $user->id,
                     'registered_with_google'=>true,
-                    // 'password' => encrypt('123456dummy'),
+                    'password' => Hash::make(encrypt($uuid)),
                     ]);
                     Auth::login($newUser);
                     return redirect('/home');
