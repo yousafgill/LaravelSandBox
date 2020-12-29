@@ -10,7 +10,7 @@ use GoldSpecDigital\LaravelEloquentUUID\Database\Eloquent\Uuid;
 use Spatie\Activitylog\Traits\LogsActivity;
 use Spatie\Permission\Traits\HasRoles;
 use Illuminate\Notifications\Notifiable;
-
+use App\Traits\SaveToUpperTrait;
 class User extends Authenticatable
 {
     use LogsActivity;
@@ -18,6 +18,7 @@ class User extends Authenticatable
     use Uuid;
     use HasRoles;
 
+    use SaveToUpperTrait;
     /**
      * The attributes that are mass assignable.
      *

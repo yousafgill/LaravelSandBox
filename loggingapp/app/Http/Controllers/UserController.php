@@ -9,7 +9,7 @@ use Spatie\Permission\Models\Role;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Arr;
-
+use App\Traits\SaveToUpperTrait;
 class UserController extends Controller
 {
 
@@ -26,6 +26,7 @@ class UserController extends Controller
          $this->middleware('permission:user-delete', ['only' => ['destroy']]);
     }
 
+    use SaveToUpperTrait;
     /**
      * Display a listing of the resource.
      *
