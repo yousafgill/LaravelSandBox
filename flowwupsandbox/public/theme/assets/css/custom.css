@@ -1,0 +1,91 @@
+.secondary-sidebar {
+        width: 28rem !important; 
+    }
+
+.hidden{
+    display: none !important;
+}
+
+#hovarable:hover{
+    background-color: lightsteelblue;
+}
+
+.tab-content-full{
+    width:100%;
+}
+
+.bg-facebook{
+    background-color:#3b5998 ;
+}
+.bg-twitter{
+    background-color:#00acee ;
+}
+.bg-linkedin{
+    background-color:#0e76a8;
+}
+
+.border-radius-8{
+    border-radius:8px;
+}
+.bg-lighter{
+    background-color: #ecf0f1;
+}
+a:hover {
+    /* background-color: #7b9005; */
+    text-decoration: none;
+    /* font-kerning: #37017c; */
+  }
+  
+
+
+/* ------------------------------------------------------------------------------
+ *
+ *  # Ecommerce stuff
+ *
+ *  Styles for Ecommerce set of pages
+ *
+ * ---------------------------------------------------------------------------- */
+ .color-selector-active {
+    position: relative; }
+    .color-selector-active i {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      margin-top: -0.5rem;
+      margin-left: -0.5rem; }
+  
+  .pricing-table-price {
+    font-size: 2.625rem; }
+    .pricing-table-price > span {
+      font-size: 1.875rem; }
+  
+  .pricing-table-list li {
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1); }
+    .card[class*=bg-]:not(.bg-transparent):not(.bg-white):not(.bg-light) .pricing-table-list li {
+      border-bottom-color: rgba(255, 255, 255, 0.2); }
+  
+  .ribbon-container {
+    width: 6.5rem;
+    height: 6.625rem;
+    overflow: hidden;
+    position: absolute;
+    top: -1px;
+    right: -1px; }
+  
+  .ribbon {
+    text-align: center;
+    font-size: 0.75rem;
+    line-height: 1.6667;
+    font-weight: 500;
+    text-transform: uppercase;
+    position: relative;
+    padding: 0.3125rem 0;
+    left: -0.6875rem;
+    top: 1.563rem;
+    width: 9.375rem;
+    z-index: 10;
+    -webkit-transform: rotate(45deg);
+            transform: rotate(45deg);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); }  
