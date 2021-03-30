@@ -34,25 +34,29 @@ class CreateNewUser implements CreatesNewUsers
                 'name' => $input['name'],
                 'email' => $input['email'],
                 'password' => Hash::make($input['password']),
-            ]), function (User $user) use ($input) {
-                $this->createTeam($user, $input);
+            ]), 
+            function (User $user) use ($input) {
+                // $this->createTeam($user, $input);
 
-            //## BEGIN EDIT - if there's an invite, attach them accordingly ##
-            if (isset($input['invite'])) {
-                if ($invitation = Invitation::where('code', $input['invite'])->first()) {
-                    if ($team = $invitation->team) {
-                        $team->users()->attach(
-                            $user,
-                            ['role' => $invitation->role]
-                        );
-                    $user->current_team_id = $team->id;
-                    $user->save();
-                    TeamMemberAdded::dispatch($team, $user);
-                    $invitation->delete();
+                    //## BEGIN EDIT - if there's an invite, attach them accordingly ##
+                    if (isset($input['invite'])) {
+                        if ($invitation = Invitation::where('code', $input['invite'])->first()) {
+                            if ($team = $invitation->team) {
+                                $team->users()->attach(
+                                    $user,
+                                    ['role' => $invitation->role]
+                                );
+                            $user->current_team_id = $team->id;
+                            $user->save();
+                            TeamMemberAdded::dispatch($team, $user);
+                            $invitation->delete();
+                            }
+                        }
                     }
-                }
-            }
-            //## END EDIT ##
+                    else{
+                        $this->createTeam($user, $input);
+                    }
+                    //## END EDIT ##
 
             });
         });

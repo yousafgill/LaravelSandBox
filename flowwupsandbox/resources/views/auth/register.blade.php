@@ -5,28 +5,38 @@
         </x-slot>
 
         <x-jet-validation-errors class="mb-4" />
-
         <form method="POST" action="{{ route('register') }}">
             @csrf
-
             <div>
                 <x-jet-label for="name" value="{{ __('Full Name') }}" />
                 <x-jet-input id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name')" required autofocus autocomplete="name" />
             </div>
-
+           
             <div class="mt-4">
                 <x-jet-label for="email" value="{{ __('Email') }}" />
-                <x-jet-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required />
+                @if (app('request')->input('email'))
+                    <x-jet-input id="email" class="block mt-1 w-full" type="email" name="email" required value="{{ app('request')->input('email') }}" readonly="readonly" />
+                @else
+                    <x-jet-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required />
+                @endif
             </div>
 
             <div class="mt-4">
                 <x-jet-label for="teamname" value="{{ __('Company/App Name') }}" />
-                <x-jet-input id="teamname" class="block mt-1 w-full" type="text" name="teamname" required />
+                @if (app('request')->input('team'))
+                    <x-jet-input id="teamname" class="block mt-1 w-full" type="text" name="teamname" required value="{{ app('request')->input('team') }}" readonly="readonly"/>
+                @else
+                    <x-jet-input id="teamname" class="block mt-1 w-full" type="text" name="teamname" required />
+                @endif
             </div>
 
             <div class="mt-4">
                 <x-jet-label for="team_slug" value="{{ __('Subdomain') }}" />
-                <x-jet-input id="team_slug" class="block mt-1 w-full" type="text" name="team_slug" required />
+                @if (app('request')->input('team'))
+                    <x-jet-input id="team_slug" class="block mt-1 w-full" type="text" name="team_slug" required value="{{ app('request')->input('team') }}" readonly="readonly" />
+                @else
+                    <x-jet-input id="team_slug" class="block mt-1 w-full" type="text" name="team_slug" required />
+                @endif
             </div>
 
             <div class="mt-4">
