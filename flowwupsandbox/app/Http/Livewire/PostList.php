@@ -22,10 +22,10 @@ class PostList extends Component
         public $datefilter;
         
         public function mount(){
-
                 $this->boardfilter=Board::all()->pluck('id')->toArray();
                 $this->statusarray=Status::all()->pluck('id')->toArray();
         }
+
         protected $listeners =[
                         'postselected'=>'handlepostselected',
                         'boardselected'=>'handleboardselected',

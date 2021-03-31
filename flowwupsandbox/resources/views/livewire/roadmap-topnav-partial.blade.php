@@ -18,7 +18,6 @@
         <button class="navbar-toggler sidebar-mobile-right-toggle" type="button">
             <i class="icon-more"></i>
         </button>
-
     </div>
 
     <div class="collapse navbar-collapse" id="navbar-mobile">
@@ -40,20 +39,13 @@
                     <i class="icon-indent-decrease2"></i>
                 </a>
             </li>
-
-
-          
-
         </ul> -->
-
         <ul class="navbar-nav ml-auto">
             <!-- <li class="nav-item">
                 <a href="#" class="navbar-nav-link">
                     Text link
                 </a>
             </li> -->
-
-          
             @guest
             <li class="nav-item dropdown">
                 <a href="#" class="navbar-nav-link" data-toggle="modal" data-target="#modal-tabbed">
@@ -67,7 +59,7 @@
                     <span>{{Auth::user()->name}}</span>
                 </a>
                 <div class="dropdown-menu dropdown-menu-right">
-                <a href="#" class="dropdown-item"><i class="icon-user-plus"></i>{{ __('Profile') }}</a>
+                <a href="{{ route('profile.show') }}" class="dropdown-item"><i class="icon-user-plus"></i>{{ __('Profile') }}</a>
                 <div class="dropdown-divider"></div>
                 <form method="POST" action="{{ route('logout') }}">
                 @csrf

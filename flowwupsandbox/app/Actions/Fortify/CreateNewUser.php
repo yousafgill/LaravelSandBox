@@ -37,7 +37,6 @@ class CreateNewUser implements CreatesNewUsers
             ]), 
             function (User $user) use ($input) {
                 // $this->createTeam($user, $input);
-
                     //## BEGIN EDIT - if there's an invite, attach them accordingly ##
                     if (isset($input['invite'])) {
                         if ($invitation = Invitation::where('code', $input['invite'])->first()) {
@@ -57,7 +56,6 @@ class CreateNewUser implements CreatesNewUsers
                         $this->createTeam($user, $input);
                     }
                     //## END EDIT ##
-
             });
         });
     }
