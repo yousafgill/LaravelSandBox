@@ -7,10 +7,10 @@
     </div>
     <div class="navbar-collapse collapse" id="navbar-footer">
         <span class="navbar-text">
-            &copy; 2015 - 2018. <a href="#">Limitless Web App Kit</a> by <a href="http://themeforest.net/user/Kopyov" target="_blank">Eugene Kopyov</a>
+            &copy; {{now()->year}}. Powered  by <a href="https://flowwup.com" target="_blank">Flowwup</a>
         </span>
         <ul class="navbar-nav ml-lg-auto">
-            <li class="nav-item">
+            <!-- <li class="nav-item">
                 <a href="#" class="navbar-nav-link">Text link</a>
             </li>
             <li class="nav-item">
@@ -25,7 +25,7 @@
                         Purchase
                     </span>
                 </a>
-            </li>
+            </li> -->
         </ul>
     </div>
 </div>

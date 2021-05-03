@@ -4,11 +4,15 @@ namespace App\Http\Livewire;
 use Livewire\Component;
 use App\Models\Board;
 use App\Models\Post;
+use App\Models\Team;
 class RoadmapSecondnavPartial extends Component
 {
     public $boards;
     public $boardname='Give feedback';
     public $listeners=['boardurlchanged'];
+    
+    public $sessionteamid;
+    public $sessionteamslug;
 
     public function boardurlchanged($bname){
         $this->boardname=$bname;
@@ -16,10 +20,21 @@ class RoadmapSecondnavPartial extends Component
 
     public function mount(){
        // $this->boards=Board::get();
+       $this->SetSessionTeamId();
     }
+
+    public function SetSessionTeamId(){
+        $this->sessionteamslug=session('tenant')->team_slug;
+        $tm=Team::where('team_slug','=',$this->sessionteamslug)->first();
+        $this->sessionteamid=$tm->id;
+        // dd($this->sessionteamid);
+    }
+
+
     private function LoadBoards(){
         $this->boards=\DB::table('boards')
         ->where('boards.deleted_at','=',null)
+        ->where('boards.team_id','=',$this->sessionteamid)
         ->leftjoin(\DB::raw('(select board_id,count(id) as totalposts from posts group by board_id) p'),'boards.id','=','p.board_id')
         ->select('boards.*',
                 \DB::raw('IFNULL(p.totalposts,0) as totalposts')

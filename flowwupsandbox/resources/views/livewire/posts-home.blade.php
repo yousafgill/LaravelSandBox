@@ -5,7 +5,7 @@
             <!-- Sidebar content -->
             <div class="sidebar-content">
                 <!-- Sidebar search -->
-                <div class="card">
+                <div class="card postbox-full">
                     <div class="card-header bg-transparent header-elements-inline">
                         <span class="text-uppercase font-size-sm font-weight-semibold">Posts</span>
                         <div class="header-elements">

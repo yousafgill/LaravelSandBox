@@ -5,6 +5,7 @@ namespace App\Http\Livewire;
 use Livewire\Component;
 use App\Models\Board;
 use App\Models\Post;
+use App\Models\Team;
 use Illuminate\Support\Facades\Auth;
 class EditPost extends Component
 {
@@ -25,8 +26,13 @@ class EditPost extends Component
     public $success="";
     public $SelectedPost;
 
+    public $sessionteamid;
+    public $sessionteamslug;
+
     public function mount($id){
-        $this->boards=Board::get();
+        $this->SetSessionTeamId();
+
+        $this->boards=Board::where('team_id','=',$this->sessionteamid)->get();
         $this->success="";
         $this->LoadPost($id);
     }
@@ -43,7 +49,12 @@ class EditPost extends Component
         $this->title=$this->SelectedPost->title;
         $this->detail=$this->SelectedPost->detail;
     }
-
+  public function SetSessionTeamId(){
+        $this->sessionteamslug=session('tenant')->team_slug;
+        $tm=Team::where('team_slug','=',$this->sessionteamslug)->first();
+        $this->sessionteamid=$tm->id;
+        // dd($this->sessionteamid);
+    }
     protected function generateSlug($string = null, $separator = "-")
     {
             if (is_null($string)) {

@@ -13,7 +13,7 @@
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-mobile">
             <i class="icon-tree5"></i>
         </button>
-        <button class="navbar-toggler sidebar-mobile-main-toggle" type="button">
+        <!-- <button class="navbar-toggler sidebar-mobile-main-toggle" type="button">
             <i class="icon-paragraph-justify3"></i>
         </button>
         <button class="navbar-toggler sidebar-mobile-secondary-toggle" type="button">
@@ -21,13 +21,13 @@
         </button>
         <button class="navbar-toggler sidebar-mobile-right-toggle" type="button">
             <i class="icon-more"></i>
-        </button>
+        </button> -->
 
     </div>
 
     <div class="collapse navbar-collapse" id="navbar-mobile">
         <ul class="navbar-nav">
-            <li class="nav-item">
+            <!-- <li class="nav-item">
                 <a href="#" class="navbar-nav-link sidebar-control sidebar-main-toggle d-none d-md-block">
                     <i class="icon-paragraph-justify3"></i>
                 </a>
@@ -43,7 +43,7 @@
                 <a href="#" class="navbar-nav-link sidebar-control sidebar-right-toggle d-none d-md-block">
                     <i class="icon-indent-decrease2"></i>
                 </a>
-            </li>
+            </li> -->
         </ul>
 
         <ul class="navbar-nav ml-auto">

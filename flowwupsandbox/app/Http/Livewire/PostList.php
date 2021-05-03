@@ -3,6 +3,7 @@ namespace App\Http\Livewire;
 use Livewire\Component;
 use App\Models\Board;
 use App\Models\Status;
+use App\Models\Team;
 class PostList extends Component
 {
         public $posts='';
@@ -21,11 +22,15 @@ class PostList extends Component
         public $status_counter=0;
         public $datefilter;
         
+
+        public $sessionteamid;
+        public $sessionteamslug;
+
         public function mount(){
+                $this->SetSessionTeamId();
                 $this->boardfilter=Board::all()->pluck('id')->toArray();
                 $this->statusarray=Status::all()->pluck('id')->toArray();
         }
-
         protected $listeners =[
                         'postselected'=>'handlepostselected',
                         'boardselected'=>'handleboardselected',
@@ -39,6 +44,14 @@ class PostList extends Component
                 $this->datefilter=$this->convertDateFilter($v);
         }
       
+
+        public function SetSessionTeamId(){
+                $this->sessionteamslug=session('tenant')->team_slug;
+                $tm=Team::where('team_slug','=',$this->sessionteamslug)->first();
+                $this->sessionteamid=$tm->id;
+                // dd($this->sessionteamid);
+            }
+
         private function convertDateFilter($label)
         {
                 return $label;
@@ -152,6 +165,8 @@ class PostList extends Component
                 ->whereIn('posts.status_id',$this->statusarray)
                 ->where('posts.detail','like',$this->TextToSearch)
                 ->where('posts.deleted_at','=',null)
+                ->where('boards.team_id','=',$this->sessionteamid)
+                ->join('boards','posts.board_id','=','boards.id')
                 ->join('statuses','posts.status_id','=','statuses.id')
                 ->join(\DB::raw('(select post_id,sum(upvote) as totalvotes from  voters group by post_id) as v'),'v.post_id','=','posts.id')
                 ->select('posts.*',

@@ -18,7 +18,7 @@ class RouteServiceProvider extends ServiceProvider
      * @var string
      */
     // public const HOME = '/dashboard';
-    public const HOME = '/dashboard';
+    public const HOME = '/';
     public const ROADMAP= '/roadmap';
     public const PREVIOUS ='/dashboard';
     // public const HOME =  url()->previous();

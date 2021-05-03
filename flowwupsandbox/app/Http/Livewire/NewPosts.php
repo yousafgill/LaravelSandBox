@@ -4,12 +4,21 @@ namespace App\Http\Livewire;
 use Livewire\Component;
 use App\Models\Post;
 use App\Models\voter;
+use App\Models\Team;
 class NewPosts extends Component
 {
     public $newposts;
     public $posts;
+    public $sessionteamid;
+    public $sessionteamslug;
 
     public $listeners=['NewPostsUpVotedHandler'=>'NewPostsUpVotedHandler'];
+
+
+    public function mount(){
+        // LoadNewposts();
+        $this->SetSessionTeamId();
+    }
 
     /**
      * this method is called when user upvote from new posts list
@@ -33,9 +42,13 @@ class NewPosts extends Component
         }
     }
 
-    public function mount(){
-        // LoadNewposts();
-       
+   
+
+    public function SetSessionTeamId(){
+        $this->sessionteamslug=session('tenant')->team_slug;
+        $tm=Team::where('team_slug','=',$this->sessionteamslug)->first();
+        $this->sessionteamid=$tm->id;
+        // dd($this->sessionteamid);
     }
 
     /**
@@ -46,6 +59,7 @@ class NewPosts extends Component
     private function LoadNewposts(){
         $this->newposts=\DB::table('posts')
         ->where('posts.deleted_at','=',null)
+        ->where('boards.team_id','=',$this->sessionteamid)
         ->join('statuses','posts.status_id','=','statuses.id')
         ->join('boards','posts.board_id','=','boards.id')
         ->join(\DB::raw('(select post_id,sum(upvote) as totalvotes from  voters group by post_id) as v'),'v.post_id','=','posts.id')

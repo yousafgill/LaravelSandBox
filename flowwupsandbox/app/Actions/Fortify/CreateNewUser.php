@@ -15,6 +15,7 @@ class CreateNewUser implements CreatesNewUsers
 {
     use PasswordValidationRules;
 
+    public $newteamid;
     /**
      * Create a newly registered user.
      *
@@ -53,7 +54,14 @@ class CreateNewUser implements CreatesNewUsers
                         }
                     }
                     else{
-                        $this->createTeam($user, $input);
+                        if(isset($input['teamname'])){
+                            $this->createTeam($user, $input);
+                            // $user->current_team_id = $team->id;
+                            // $user->save();
+                        }else{
+                            $user->save();
+                        }
+                       
                     }
                     //## END EDIT ##
             });
@@ -68,11 +76,28 @@ class CreateNewUser implements CreatesNewUsers
      */
     protected function createTeam(User $user, array $input)
     {
-        $user->ownedTeams()->save(Team::forceCreate([
+       $team= $user->ownedTeams()->save(Team::forceCreate([
             'user_id' => $user->id,
             'name' => $input['teamname'],
             'personal_team' => true,
-            'team_slug' => $input['team_slug']
+            'team_slug' => $this->generateSlug( $input['team_slug'])
         ]));
+        $user->current_team_id = $team->id;
+        $user->save();
     }
+
+    protected function generateSlug($string = null, $separator = "-")
+    {
+            if (is_null($string)) {
+                return "";
+            }
+
+            $string = str_replace(' ', '-', $string); // Replaces all spaces with hyphens.
+            $string = preg_replace('/[^A-Za-z0-9\-]/', '', $string); // Removes special chars.
+            $slug = preg_replace('/-+/', '-', $string); // Replaces multiple hyphens with single one.
+            $slug = strtolower($slug);
+
+            return $slug;
+    }
+
 }

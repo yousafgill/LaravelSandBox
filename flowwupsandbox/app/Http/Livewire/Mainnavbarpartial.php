@@ -11,7 +11,14 @@ class Mainnavbarpartial extends Component
     public function render()
     {
         if (Auth::check()) {
-            $company=Auth()->user()->currentTeam;
+        
+            $company='';
+            if (Auth()->user()->currentTeam !=null) {
+                $company=Auth()->user()->currentTeam;
+            }
+            else{
+                $company='Guest';
+            }
             return view('livewire.mainnavbarpartial',compact('company'));
         }
        else{

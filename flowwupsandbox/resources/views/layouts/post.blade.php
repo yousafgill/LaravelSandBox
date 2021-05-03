@@ -65,7 +65,7 @@
             <div class="content-wrapper">
                 <!-- Page Header -->
 
-                @livewire('pageheaderpartial')
+                <!-- @livewire('pageheaderpartial') -->
                 <!-- /Page Header -->
 
                 <!-- Content Area -->

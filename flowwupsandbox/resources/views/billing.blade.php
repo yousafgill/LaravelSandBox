@@ -98,6 +98,7 @@
                 <h1 class="pricing-table-price"><span class="mr-1"></span></h1>
                 <ul class="pricing-table-list list-unstyled mb-3">
                     <li><strong></strong> </li>
+                    <li><strong>Total Teams </strong> </li>
                     <li><strong>Total Active Boards </strong> </li>
                     <li><strong>Tracked Users</strong></li>
                     <li><strong>Active Team Members</strong> </li>
@@ -116,6 +117,7 @@
                
                 <ul class="pricing-table-list list-unstyled mb-3">
                     <li><strong></strong> </li>
+                    <li><strong>1</strong> </li>
                     <li><strong>5</strong> </li>
                     <li><strong>250</strong> </li>
                     <li><strong>3</strong> </li>
@@ -134,6 +136,7 @@
                 <h1 class="pricing-table-price"><span class="mr-1">$</span>35</h1>
                 <ul class="pricing-table-list list-unstyled mb-3">
                     <li><strong></strong> </li>
+                    <li><strong>5</strong> </li>
                     <li><strong>15</strong> </li>
                     <li><strong>2,500</strong> </li>
                     <li><strong>15</strong> </li>
@@ -153,6 +156,7 @@
                 <h1 class="pricing-table-price"><span class="mr-1">$</span>49</h1>
                 <ul class="pricing-table-list list-unstyled mb-3">
                     <li><strong></strong> </li>
+                    <li><strong>10</strong> </li>
                     <li><strong>Unlimited</strong> </li>
                     <li><strong>Unlimited</strong> </li>
                     <li><strong>Unlimited</strong> </li>

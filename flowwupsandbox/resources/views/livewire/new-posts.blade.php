@@ -27,7 +27,7 @@
                                     <div class="d-sm-flex align-item-sm-center flex-sm-nowrap">
                                         <div>
                                             <a href="{{route('post.edit',$p->id)}}">
-                                                <h6 class="mb-0">{{$p->title}}</h6>
+                                                <h6 class="mb-0 text-default">{{$p->title}}</h6>
                                             </a>
                                             <p class="mb-0"><span class="text-{{$p->status_color}} font-weight-bold">{{$p->status_title}}</span></p>
                                             <p class="mb-0">{{\Illuminate\Support\Str::limit($p->detail, 80, $end='...')}}</p>

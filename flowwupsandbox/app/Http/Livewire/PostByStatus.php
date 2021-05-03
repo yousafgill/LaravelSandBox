@@ -7,7 +7,7 @@ use App\Models\Post;
 use App\Models\Board;
 use App\Models\Status;
 use App\Models\voter;
-
+use App\Models\Team;
 class PostByStatus extends Component
 {
    
@@ -19,6 +19,9 @@ class PostByStatus extends Component
     public $status_inprogress=4;
     public $status_completed=5;
 
+    public $sessionteamid;
+    public $sessionteamslug;
+
     public $listeners=['StatsDashboardUpVotedHandler'=>'StatsDashboardUpVotedHandler'];
 
     /**
@@ -27,11 +30,19 @@ class PostByStatus extends Component
      * @return void
      */
     public function mount(){
+    $this->SetSessionTeamId();
        $this->plannedposts=$this->getPosts($this->status_planned);
        $this->inprogressposts=$this->getPosts($this->status_inprogress);
        $this->completeposts=$this->getPosts($this->status_completed);
     }
     
+    public function SetSessionTeamId(){
+        $this->sessionteamslug=session('tenant')->team_slug;
+        $tm=Team::where('team_slug','=',$this->sessionteamslug)->first();
+        $this->sessionteamid=$tm->id;
+        // dd($this->sessionteamid);
+    }
+
     /**
      * Undocumented function
      *
@@ -42,6 +53,7 @@ class PostByStatus extends Component
         $p=\DB::table('posts')
         ->where('posts.status_id','=',$status)
         ->where('posts.deleted_at','=',null)
+        ->where('boards.team_id','=',$this->sessionteamid)
         ->join('statuses','posts.status_id','=','statuses.id')
         ->join('boards','posts.board_id','=','boards.id')
         ->join(\DB::raw('(select post_id,sum(upvote) as totalvotes from  voters group by post_id) as v'),'v.post_id','=','posts.id')

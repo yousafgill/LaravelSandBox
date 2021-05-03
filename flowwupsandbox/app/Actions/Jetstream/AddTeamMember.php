@@ -34,7 +34,12 @@ class AddTeamMember implements AddsTeamMembers
                 $newTeamMember = Jetstream::findUserByEmailOrFail($email),
                 ['role' => $role]
             );
-    
+
+            //Following two lines set current team id of the user to the invited team
+            $newTeamMember->current_team_id = $team->id;
+            $newTeamMember->save();
+            
+            //Team Member Added Dispatch Original Code
             TeamMemberAdded::dispatch($team, $newTeamMember);
         }
         else{

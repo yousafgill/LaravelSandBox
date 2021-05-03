@@ -1,5 +1,5 @@
 .secondary-sidebar {
-        width: 28rem !important; 
+        width: 22rem !important; 
     }
 
 .hidden{
@@ -36,6 +36,13 @@ a:hover {
     /* font-kerning: #37017c; */
   }
   
+.border-light-grey{
+    border-color: #dddddd;
+}
+
+.postbox-full{
+    min-height: 80vh !important;
+}
 
 
 /* ------------------------------------------------------------------------------

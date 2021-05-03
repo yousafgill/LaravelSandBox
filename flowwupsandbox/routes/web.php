@@ -13,14 +13,37 @@ use Illuminate\Support\Facades\Auth;
 |
 */
 
-Route::middleware(['auth:sanctum', 'verified'])->get('/', function () {
-    // return redirect()->route('dashboard');
-    return view('dashboard');
-    // return redirect()->route('roadmap.public');
+
+
+Route::get('/', function () {
+    if(Auth::check()){
+        if(Auth::user()->current_team_id==null)
+            {return redirect()->route('roadmap.public');}
+        else{
+            return view('dashboard');
+        }
+    }else{
+        return view('welcome');
+    }
 });
+// Route::middleware(['auth:sanctum', 'verified'])->get('/', function () {
+//     if(Auth::user()->current_team_id==null)
+//         {return redirect()->route('roadmap.public');}
+//     else{
+//         return view('dashboard');
+//     }
+// });
+
+// Route::get('/welcome',function(){
+//     return view('welcome');
+// });
 
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
-    return view('dashboard');
+    if(Auth::user()->current_team_id==null)
+        {return redirect()->route('roadmap.public');}
+    else{
+        return view('dashboard');
+    }
 })->name('dashboard');
 
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboardv1', function () {
@@ -28,7 +51,12 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/dashboardv1', function ()
 })->name('dashboardv1');
 
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard/posts/{id}', function ($id) {
-    return view('livewire.posts-home',array($id));
+    if(Auth::user()->current_team_id==null)
+        {return redirect()->route('roadmap.public');}
+    else{
+        return view('livewire.posts-home',array($id));
+    }
+    
 })->name('dashboard.posts');
 
 

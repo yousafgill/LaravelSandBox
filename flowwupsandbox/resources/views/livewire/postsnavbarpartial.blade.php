@@ -13,7 +13,7 @@
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-mobile">
             <i class="icon-tree5"></i>
         </button>
-        <button class="navbar-toggler sidebar-mobile-main-toggle" type="button">
+        <!-- <button class="navbar-toggler sidebar-mobile-main-toggle" type="button">
             <i class="icon-paragraph-justify3"></i>
         </button>
         <button class="navbar-toggler sidebar-mobile-secondary-toggle" type="button">
@@ -21,11 +21,11 @@
         </button>
         <button class="navbar-toggler sidebar-mobile-right-toggle" type="button">
             <i class="icon-more"></i>
-        </button>
+        </button> -->
     </div>
     <div class="collapse navbar-collapse" id="navbar-mobile">
         <ul class="navbar-nav">
-            <li class="nav-item">
+            <!-- <li class="nav-item">
                 <a href="#" class="navbar-nav-link sidebar-control sidebar-main-toggle d-none d-md-block">
                     <i class="icon-paragraph-justify3"></i>
                 </a>
@@ -39,28 +39,28 @@
                 <a href="#" class="navbar-nav-link sidebar-control sidebar-right-toggle d-none d-md-block">
                     <i class="icon-indent-decrease2"></i>
                 </a>
-            </li>
-            <li class="nav-item alpha-success">
+            </li> -->
+            <li class="nav-item">
                 <a href="{{url('/dashboard')}}" class="navbar-nav-link d-none d-md-block">
-                    <i class="icon-home4 text-primary"></i>
+                    <i class="icon-home4"></i>
                     <!-- <span> Home </span> -->
                 </a>
             </li>
-            <li class="nav-item alpha-success">
+            <li class="nav-item">
                 <a href="{{url('/dashboard/posts/-1')}}" class="navbar-nav-link d-none d-md-block">
-                    <i class="icon-bubble-lines4 text-primary"></i>
+                    <i class="icon-bubble-lines4"></i>
                     <!-- <span> Feedback </span> -->
                 </a>
             </li>
-            <li class="nav-item alpha-success">
+            <li class="nav-item">
                 <a href="{{url('/dashboard/boards')}}" class="nav-link navbar-nav-link d-none d-md-block">
-                    <i class="icon-stack text-primary"></i>
+                    <i class="icon-stack"></i>
                     <!-- <span> Boards </span> -->
                 </a>
             </li>
         </ul>
         <ul class="navbar-nav ml-auto">
-            <li class="nav-item">
+            <!-- <li class="nav-item">
                 <a href="#" class="navbar-nav-link">
                     Text link
                 </a>
@@ -72,7 +72,7 @@
                     <span class="d-md-none ml-2">Notifications</span>
                     <span class="badge badge-mark border-white ml-auto ml-md-0"></span>
                 </a>
-            </li>
+            </li> -->
 
             <li class="nav-item dropdown dropdown-user">
                 <a href="#" class="navbar-nav-link d-flex align-items-center dropdown-toggle" data-toggle="dropdown">

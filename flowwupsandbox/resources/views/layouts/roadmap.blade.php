@@ -112,6 +112,7 @@
                                 </div>
                                 <form method="POST" action="{{ route('login') }}">
                                     @csrf
+                                    
                                     <div class="form-group form-group-feedback form-group-feedback-left">
                                         <input type="text" class="form-control" id="email" name="email" placeholder="Email">
                                         <div class="form-control-feedback">
@@ -127,7 +128,7 @@
                                     </div>
 
                                     <div class="form-group d-flex align-items-center">
-                                        <a href="login_password_recover.html" class="ml-auto">Forgot password?</a>
+                                        <a href="{{url('/forgot-password')}}" class="ml-auto">Forgot password?</a>
                                     </div>
 
                                     <div class="form-group">
@@ -145,36 +146,43 @@
                                     <h5 class="mb-0">Create account</h5>
                                     <span class="d-block text-muted">All fields are required</span>
                                 </div>
-
-                                <div class="form-group form-group-feedback form-group-feedback-left">
-                                    <input type="email" class="form-control" placeholder="Email">
-                                    <div class="form-control-feedback">
-                                        <i class="icon-mention text-muted"></i>
+                                <form method="POST" action="{{ route('register') }}">
+                                    @csrf
+                                    <div class="form-group form-group-feedback form-group-feedback-left">
+                                        <input type="text" class="form-control" id="name" name="name" placeholder="Name">
+                                        <div class="form-control-feedback">
+                                            <i class="icon-mention text-muted"></i>
+                                        </div>
                                     </div>
-                                </div>
-
-                                <div class="form-group form-group-feedback form-group-feedback-left">
-                                    <input type="password" class="form-control" placeholder="Your password">
-                                    <div class="form-control-feedback">
-                                        <i class="icon-user-lock text-muted"></i>
+                                    <div class="form-group form-group-feedback form-group-feedback-left">
+                                        <input type="email" id="email" name="email" class="form-control" placeholder="Email">
+                                        <div class="form-control-feedback">
+                                            <i class="icon-mention text-muted"></i>
+                                        </div>
                                     </div>
-                                </div>
 
-                                <div class="form-group form-group-feedback form-group-feedback-left">
-                                    <input type="password" class="form-control" placeholder="Confirm password">
-                                    <div class="form-control-feedback">
-                                        <i class="icon-user-lock text-muted"></i>
+                                    <div class="form-group form-group-feedback form-group-feedback-left">
+                                        <input type="password" id="password" name="password" class="form-control" placeholder="Your password">
+                                        <div class="form-control-feedback">
+                                            <i class="icon-user-lock text-muted"></i>
+                                        </div>
                                     </div>
-                                </div>
 
-                                <button type="submit" class="btn bg-dark btn-block">Register</button>
-                                <span class="form-text text-center text-muted">By continuing, you're confirming that you've read our <a href="#">Terms &amp; Conditions</a> and <a href="#">Cookie Policy</a></span>
+                                    <div class="form-group form-group-feedback form-group-feedback-left">
+                                        <input type="password" class="form-control" id="password_confirmation" name="password_confirmation" placeholder="Confirm password">
+                                        <div class="form-control-feedback">
+                                            <i class="icon-user-lock text-muted"></i>
+                                        </div>
+                                    </div>
 
+                                    <button type="submit" class="btn bg-dark btn-block">Register</button>
+                                    <span class="form-text text-center text-muted">By continuing, you're confirming that you've read our <a href="#">Terms &amp; Conditions</a> and <a href="#">Cookie Policy</a></span>
+                                </form>
                                 <div class="form-group text-center text-muted content-divider">
                                     <span class="px-2">Already have an account?</span>
                                 </div>
                                 <!-- <div class="form-group"> -->
-                                    <a href="#login-tab1" class="btn btn-light btn-block" data-toggle="tab">Sign in</a>
+                                <a href="#login-tab1" class="btn btn-light btn-block" data-toggle="tab">Sign in</a>
                                 <!-- </div> -->
                             </div>
 

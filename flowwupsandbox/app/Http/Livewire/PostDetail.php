@@ -9,6 +9,7 @@ use App\Models\Comment;
 use App\Models\status;
 use App\Models\Category;
 use App\Models\PostCategory;
+use App\Models\Team;
 use Illuminate\Support\Facades\Auth;
 class PostDetail extends Component
 {
@@ -19,11 +20,13 @@ class PostDetail extends Component
     public $categories;         // list of categories to be used in dropdown for post attribute
 
 
-    public $estimated='';       //model property for estimated date to be changed on post attribute form
-    public $board_id='';        //model property for Board Id to be changed on Post Attribute Form
+    public $estimated='';       //model property for estimated date to be changed on post att ribute form
+    public $board_id='';        //model property for Board Id to be chan ged on Post Attribute Form
     public $status_id='';       //model property for status id to be changed on Post Attribute Form
     public $category_id='';     //model property for category id to be changed on post attribute form
     
+    public $sessionteamid;
+    public $sessionteamslug;
 
     public $post_current_board;
     public $post_current_status;
@@ -45,13 +48,22 @@ class PostDetail extends Component
 
     public function mount(){
         // $this->SelectedPost=Post::latest()->first();
-        $this->boards=Board::get();
+        $this->SetSessionTeamId();
+        $this->boards=Board::where('team_id','=',$this->sessionteamid)->get();
         $this->categories=Category::get();
         $this->message="";
         $this->statuses=status::get();
-        $this->owners=User::get();
+        $this->owners=User::where('current_team_id','=',$this->sessionteamid)->get();
         // $this->LoadCurrentPostComments();
     }
+
+    public function SetSessionTeamId(){
+        $this->sessionteamslug=session('tenant')->team_slug;
+        $tm=Team::where('team_slug','=',$this->sessionteamslug)->first();
+        $this->sessionteamid=$tm->id;
+        // dd($this->sessionteamid);
+    }
+
     /**
      *  This function is called when user select post category
      *  Author  : Yousaf Gill

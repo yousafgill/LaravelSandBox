@@ -42,13 +42,12 @@ class InviteTeamMember extends Notification
     {
         $userName = $notifiable->user->name;
         $teamName = $notifiable->team->name;
-       
         return (new MailMessage)
-            ->subject("$userName invites you to join $teamName")
-            ->line("$userName wants you to join their team: $teamName")
-            ->action('Create Your Account', route('register', ['email' => $notifiable->email, 'invite' => $notifiable->code,'team' =>$teamName]))
-            ->line('Looking forward to having you on the team!');
-        // return (new MailMessage)
+        ->subject("$userName invites you to join $teamName")
+        ->line("$userName wants you to join their team: $teamName")
+        ->action('Create Your Account', route('register', ['email' => $notifiable->email, 'invite' => $notifiable->code,'team' =>$teamName]))
+        ->line('Looking forward to having you on the team!');
+      // return (new MailMessage)
         //             ->line('The introduction to the notification.')
         //             ->action('Notification Action', url('/'))
         //             ->line('Thank you for using our application!');

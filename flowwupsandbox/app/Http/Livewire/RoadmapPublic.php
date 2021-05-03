@@ -6,22 +6,33 @@ use App\Models\Post;
 use App\Models\Board;
 use App\Models\Status;
 use App\Models\voter;
+use App\Models\Team;
 class RoadmapPublic extends Component
 {
     public $boards;
     public $plannedposts;
     public $inprogressposts;
     public $completeposts;
-
+    public $sessionteamid;
+    public $sessionteamslug;
     public $listeners=['RoadmapUpVotedHandler'=>'RoadmapUpVotedHandler'];
 
     public function mount(){
+       
+        $this->SetSessionTeamId();
+        
         $this->LoadBoards();
         $this->LoadPlannedPosts();
         $this->LoadInprogressPosts();
         $this->LoadCompletePosts();
     }
 
+    public function SetSessionTeamId(){
+        $this->sessionteamslug=session('tenant')->team_slug;
+        $tm=Team::where('team_slug','=',$this->sessionteamslug)->first();
+        $this->sessionteamid=$tm->id;
+        // dd($this->sessionteamid);
+    }
     /**
      * Load Planne Posts
      *
@@ -31,6 +42,7 @@ class RoadmapPublic extends Component
         $this->plannedposts=\DB::table('posts')
         ->where('posts.status_id','=',3)
         ->where('posts.deleted_at','=',null)
+        ->where('boards.team_id','=',$this->sessionteamid)
         ->join('statuses','posts.status_id','=','statuses.id')
         ->join('boards','posts.board_id','=','boards.id')
         ->join(\DB::raw('(select post_id,sum(upvote) as totalvotes from  voters group by post_id) as v'),'v.post_id','=','posts.id')
@@ -52,6 +64,7 @@ class RoadmapPublic extends Component
         $this->inprogressposts=\DB::table('posts')
         ->where('posts.status_id','=',4)
         ->where('posts.deleted_at','=',null)
+        ->where('boards.team_id','=',$this->sessionteamid)
         ->join('statuses','posts.status_id','=','statuses.id')
         ->join('boards','posts.board_id','=','boards.id')
         ->join(\DB::raw('(select post_id,sum(upvote) as totalvotes from  voters group by post_id) as v'),'v.post_id','=','posts.id')
@@ -73,6 +86,7 @@ class RoadmapPublic extends Component
         $this->completeposts=\DB::table('posts')
         ->where('posts.status_id','=',5)
         ->where('posts.deleted_at','=',null)
+        ->where('boards.team_id','=',$this->sessionteamid)
         ->join('statuses','posts.status_id','=','statuses.id')
         ->join('boards','posts.board_id','=','boards.id')
         ->join(\DB::raw('(select post_id,sum(upvote) as totalvotes from  voters group by post_id) as v'),'v.post_id','=','posts.id')
@@ -87,6 +101,7 @@ class RoadmapPublic extends Component
     private function LoadBoards(){
         $this->boards=\DB::table('boards')
         ->where('boards.deleted_at','=',null)
+        ->where('boards.team_id','=',$this->sessionteamid)
         ->leftjoin(\DB::raw('(select board_id,count(id) as totalposts from posts group by board_id) p'),'boards.id','=','p.board_id')
         ->select('boards.*',
                 \DB::raw('IFNULL(p.totalposts,0) as totalposts')

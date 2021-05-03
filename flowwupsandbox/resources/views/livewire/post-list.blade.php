@@ -20,7 +20,7 @@
     <div class="overflow-auto" style="max-height:600px;">
         <div class="mt-4 mb-4">
             @foreach($posts as $post)
-            <div  class="media flex-column flex-md-row  pt-1 pb-1 border-left-3 border-left-{{$post->status_color}} alpha-{{$post->status_color}}">
+            <div class="media flex-column flex-md-row  pt-1 pb-1 border-left-3 border-left-{{$post->status_color}} alpha-{{$post->status_color}}">
                 <div class="media-body pl-2" wire:click.prevent="$emit('postselected',{{$post->id}})">
                     <div class="media-title">
                         <a href="#" class="font-weight-semibold text-dark">{{$post->title}} </a>
