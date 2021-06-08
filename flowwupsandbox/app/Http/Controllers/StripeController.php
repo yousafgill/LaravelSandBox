@@ -23,6 +23,7 @@ class StripeController extends Controller
                     'quantity' => 1,
                 ]],
                 'success_url' => route('dashboard'),
+                // 'success_url' => route('stripe.success'),
                 'cancel_url' => route('billing'),
             ]);
         }
@@ -35,6 +36,9 @@ class StripeController extends Controller
         }
 
         return response()->json(['sessionId' => $session['id']]);
+    }
+    public function success(Request $r){
+        // dd($r);
     }
 
     public function portal(Request $request)

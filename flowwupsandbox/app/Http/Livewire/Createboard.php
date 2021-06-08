@@ -4,6 +4,11 @@ namespace App\Http\Livewire;
 use Livewire\Component;
 use App\Models\Board;
 use App\Models\User;
+use App\Models\plan;
+use App\Models\Team;
+use Illuminate\Support\Facades\DB;
+use Laravel\Cashier\Cashier;
+
 use Illuminate\Support\Facades\Auth;
 class Createboard extends Component
 {
@@ -11,13 +16,15 @@ class Createboard extends Component
     public $slug="";
     public $accessType="";
     public $success="";
-
+    public $limitreached="";
+    
     protected $rules = [
         'name' => 'required|min:3',
         'slug' => 'required|min:3',
     ];
 
     public function mount(){
+        $this->CheckLimit();
         $this->clearFields();
     }
     protected function generateSlug($string = null, $separator = "-")
@@ -37,16 +44,18 @@ class Createboard extends Component
 
     public function updated($propertyName)
     {
-          if ($propertyName == "name"){
-            $this->validateOnly($propertyName);
-            $this->slug = $this->generateSlug($this->name);
-         }
+        if ($propertyName == "name"){
+           $this->validateOnly($propertyName);
+           $this->slug = $this->generateSlug($this->name);
+        }
     }
 
 
     public function submitForm(){
 
-      $this->validate();
+        $this->CheckLimit();
+        
+        $this->validate();
 
       //Catch this here in case the user changes the Slug after adding in the Board Name
       $this->slug = $this->generateSlug($this->slug);
@@ -72,6 +81,20 @@ class Createboard extends Component
       return redirect()->to('/dashboard/boards');
     }
 
+    public function CheckLimit(){
+        $user=Auth::user();
+        $teamid=Auth::user()->current_team_id;
+        $teamplan=\DB::table('subscriptions as s')
+                    ->where('s.team_id','=',$teamid)
+                    ->join('plans as p','p.plan_stripe_code','=','s.stripe_id')
+                    ->select('p.*')
+                    ->first();
+
+        $planboards=$teamplan->total_active_boards ?: 0;
+        $myboards=board::where('team_id','=',$teamid)->count();
+        $result=$myboards >=$planboards;
+        $this->limitreached=$result;
+    }
     private function clearFields()
     {
         $this->name = '';

@@ -10,6 +10,7 @@ use Laravel\Fortify\TwoFactorAuthenticatable;
 use Laravel\Jetstream\HasProfilePhoto;
 use Laravel\Jetstream\HasTeams;
 use Laravel\Sanctum\HasApiTokens;
+use Carbon\Carbon;
 
 class User extends Authenticatable
 {
@@ -26,9 +27,15 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'name', 'email', 'password','trial_until','plan_until',
+        'current_team_id','profile_photo_path','plan_mode'
     ];
     
+    protected $dates = [
+        'trial_until',
+        'plan_until'
+    ];
+
     /**
      * The attributes that should be hidden for arrays.
      *
@@ -62,4 +69,14 @@ class User extends Authenticatable
     public function invitations() {
         return $this->hasMany('App\Models\Invitation');
     }
+
+    public function getFreeTrialDaysLeftAttribute(){
+    
+    // Future field that will be implemented after payments
+    if ($this->plan_until) { 
+        return 0;
+    }
+
+    return now()->diffInDays($this->trial_until, false);
+}
 }

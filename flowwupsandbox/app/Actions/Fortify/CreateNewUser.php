@@ -10,12 +10,17 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Laravel\Fortify\Contracts\CreatesNewUsers;
 use Laravel\Jetstream\Events\TeamMemberAdded;
+use Illuminate\Http\Request;
+use Illuminate\Http\Response;
+use Illuminate\Http\RedirectResponse;
+use Carbon\Carbon;
 
 class CreateNewUser implements CreatesNewUsers
 {
     use PasswordValidationRules;
 
     public $newteamid;
+    public $domain;
     /**
      * Create a newly registered user.
      *
@@ -27,14 +32,17 @@ class CreateNewUser implements CreatesNewUsers
         Validator::make($input, [
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'teamname' =>['required','string','unique:teams,name'],
             'password' => $this->passwordRules(),
         ])->validate();
 
-        return DB::transaction(function () use ($input) {
+        $NewUser=DB::transaction(function () use ($input) {
             return tap(User::create([
                 'name' => $input['name'],
                 'email' => $input['email'],
                 'password' => Hash::make($input['password']),
+                'plan_mode' => 'Trial',
+                'trial_until' => now()->addDays(config('app.free_trial_days')),
             ]), 
             function (User $user) use ($input) {
                 // $this->createTeam($user, $input);
@@ -44,7 +52,9 @@ class CreateNewUser implements CreatesNewUsers
                             if ($team = $invitation->team) {
                                 $team->users()->attach(
                                     $user,
-                                    ['role' => $invitation->role]
+                                    ['role' => $invitation->role,
+                                    'plan_mode' => 'Invite'
+                                    ]
                                 );
                             $user->current_team_id = $team->id;
                             $user->save();
@@ -56,16 +66,20 @@ class CreateNewUser implements CreatesNewUsers
                     else{
                         if(isset($input['teamname'])){
                             $this->createTeam($user, $input);
-                            // $user->current_team_id = $team->id;
-                            // $user->save();
+                            $d=$input['team_slug'];
                         }else{
                             $user->save();
                         }
                        
                     }
-                    //## END EDIT ##
+                //## END EDIT ##
+               
             });
+           
         });
+        // return redirect('http://gill.localhost:8000/dashboard');
+        return $NewUser;
+       
     }
 
     /**
@@ -82,8 +96,21 @@ class CreateNewUser implements CreatesNewUsers
             'personal_team' => true,
             'team_slug' => $this->generateSlug( $input['team_slug'])
         ]));
+        $this->newteamid= $team->id;
+        $this->domain = $team->slug;
         $user->current_team_id = $team->id;
         $user->save();
+        
+        $sub=\DB::table('subscriptions')->insert([
+            'team_id' => $team->id,
+            'name' => 'Trial',
+            'stripe_id' => 'Trial',
+            'stripe_status' => 'Active',
+            'stripe_plan' => 'Trial',
+            'quantity' => 1,
+            'trial_ends_at' => Carbon::now()->addDays(14),
+            'ends_at' =>Carbon::now()->addDays(14)
+        ]);
     }
 
     protected function generateSlug($string = null, $separator = "-")
@@ -100,4 +127,7 @@ class CreateNewUser implements CreatesNewUsers
             return $slug;
     }
 
+    public function redirectuser($domain){
+        return redirect('/dashboard');
+    }
 }

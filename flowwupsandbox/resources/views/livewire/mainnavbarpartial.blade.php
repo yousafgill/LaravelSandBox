@@ -2,13 +2,12 @@
     <div class="navbar-brand">
         <a href="{{url('/')}}" class="d-inline-block">
             @if(isset($company))
-            <h4 class="text-default">{{$company->name}}</h4>
+                <h4 class="text-default">{{$company->name}}</h4>
             @else
-            <img src="/theme/global_assets/images/logo_dark.png" alt="">
+                <img src="/theme/global_assets/images/logo_dark.png" alt="">
             @endif
         </a>
     </div>
-
     <div class="d-md-none">
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-mobile">
             <i class="icon-tree5"></i>
@@ -22,7 +21,6 @@
         <button class="navbar-toggler sidebar-mobile-right-toggle" type="button">
             <i class="icon-more"></i>
         </button> -->
-
     </div>
 
     <div class="collapse navbar-collapse" id="navbar-mobile">
@@ -32,13 +30,11 @@
                     <i class="icon-paragraph-justify3"></i>
                 </a>
             </li>
-
             <li class="nav-item">
                 <a href="#" class="navbar-nav-link sidebar-control sidebar-secondary-toggle d-none d-md-block">
                     <i class="icon-transmission"></i>
                 </a>
             </li>
-
             <li class="nav-item">
                 <a href="#" class="navbar-nav-link sidebar-control sidebar-right-toggle d-none d-md-block">
                     <i class="icon-indent-decrease2"></i>
@@ -47,11 +43,17 @@
         </ul>
 
         <ul class="navbar-nav ml-auto">
-            <!-- <li class="nav-item">
-                <a href="#" class="navbar-nav-link">
-                    Text link
+            <li class="nav-item">
+                @if (auth()->user()->plan_mode =='Trial')
+                <a href="#" class="navbar-nav-link bg-danger">
+                    Your Trial Period will end in {{auth()->user()->free_trial_days_left}} days
                 </a>
-            </li> -->
+                @elseif(auth()->user()->plan_mode =='Subscription')
+                <a href="#" class="navbar-nav-link bg-success">
+                    Your successfully subscribed till {{auth()->user()->plan_until->toFormattedDateString()}}
+                </a>
+                @endif
+            </li>
 
             <!-- <li class="nav-item dropdown">
                 <a href="#" class="navbar-nav-link">
@@ -107,3 +109,100 @@
         </ul>
     </div>
 </div>
+
+@if (auth()->check() && auth()->user()->plan_mode=="Trial" && auth()->user()->free_trial_days_left <= 0) <!-- Modal -->
+    <div class="modal NO-fade" tabindex="-1" role="dialog" style="display: block">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="modal-title">Upgrade Plan</h3>
+                </div>
+                <div class="modal-body">
+                    <div class="alert alert-danger">
+                        Your Free Trial is over. Please choose plan to continue.
+                    </div>
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="card-group mb-3">
+                                <div class="card">
+                                    <div class="card-body text-center px-0">
+                                        <h4 class="mt-2 mb-3">Choose a Plan</h4>
+                                        <h1 class="pricing-table-price"><span class="mr-1"></span></h1>
+                                        <ul class="pricing-table-list list-unstyled mb-3">
+                                            <li><strong></strong> </li>
+                                            <li><strong>Total Teams </strong> </li>
+                                            <li><strong>Total Active Boards </strong> </li>
+                                            <li><strong>Tracked Users</strong></li>
+                                            <li><strong>Active Team Members</strong> </li>
+                                            <li><strong>Daily Backups</strong> </li>
+                                            <li><strong>24/7 Support</strong> </li>
+                                        </ul>
+                                        <!-- <a href="#" class="btn bg-danger-400 btn-lg text-uppercase font-size-sm font-weight-semibold">Purchase</a> -->
+                                    </div>
+                                </div>
+
+                                <div class="card">
+                                    <div class="card-body text-center px-0">
+                                        <h4 class="mt-2 mb-3">Starter</h4>
+                                        <h1 class="pricing-table-price"><span class="mr-1">$</span>25
+                                        </h1>
+
+                                        <ul class="pricing-table-list list-unstyled mb-3">
+                                            <li><strong></strong> </li>
+                                            <li><strong>1</strong> </li>
+                                            <li><strong>5</strong> </li>
+                                            <li><strong>250</strong> </li>
+                                            <li><strong>3</strong> </li>
+                                            <li><strong><i class="icon-cancel-square2 text-danger"></i></strong> </li>
+                                            <li><strong><i class="icon-checkbox-checked2 text-success"></i></strong> </li>
+                                        </ul>
+                                        <button data-plan="plan_starter" class="btn bg-primary-400 btn-lg text-uppercase font-size-sm font-weight-semibold">Subscribe</button>
+                                    </div>
+
+
+                                </div>
+
+                                <div class="card">
+                                    <div class="card-body text-center px-0">
+                                        <h4 class="mt-2 mb-3">Growth</h4>
+                                        <h1 class="pricing-table-price"><span class="mr-1">$</span>35</h1>
+                                        <ul class="pricing-table-list list-unstyled mb-3">
+                                            <li><strong></strong> </li>
+                                            <li><strong>5</strong> </li>
+                                            <li><strong>15</strong> </li>
+                                            <li><strong>2,500</strong> </li>
+                                            <li><strong>15</strong> </li>
+                                            <li><strong><i class="icon-checkbox-checked2 text-success"></i></strong> </li>
+                                            <li><strong><i class="icon-checkbox-checked2 text-success"></i></strong> </li>
+                                        </ul>
+                                        <button data-plan="plan_growth" class="btn bg-pink-600 btn-lg text-uppercase font-size-sm font-weight-semibold">Subscribe</button>
+                                    </div>
+                                    <div class="ribbon-container">
+                                        <div class="ribbon bg-pink-600">Popular</div>
+                                    </div>
+                                </div>
+
+                                <div class="card">
+                                    <div class="card-body text-center px-0">
+                                        <h4 class="mt-2 mb-3">Business</h4>
+                                        <h1 class="pricing-table-price"><span class="mr-1">$</span>49</h1>
+                                        <ul class="pricing-table-list list-unstyled mb-3">
+                                            <li><strong></strong> </li>
+                                            <li><strong>10</strong> </li>
+                                            <li><strong>Unlimited</strong> </li>
+                                            <li><strong>Unlimited</strong> </li>
+                                            <li><strong>Unlimited</strong> </li>
+                                            <li><strong><i class="icon-checkbox-checked2 text-success"></i></strong> </li>
+                                            <li><strong><i class="icon-checkbox-checked2 text-success"></i></strong> </li>
+                                        </ul>
+                                        <button data-plan="plan_business" class="btn bg-primary-400 btn-lg text-uppercase font-size-sm font-weight-semibold">Subscribe</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    @endif

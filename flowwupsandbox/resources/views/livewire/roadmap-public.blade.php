@@ -112,7 +112,7 @@
         <div class="col-md-4">
 
             <!-- Vertical form -->
-            <div class="card border-radius-8">
+            <div class="card">
                 <div class="card-header bg-light header-elements-inline">
                     <h5 class="card-title"><i class="icon-circle2 text-success pr-1"></i>Complete</h5>
                     <div class="header-elements">
@@ -122,7 +122,7 @@
                     </div>
                 </div>
 
-                <div class="card-body p-2 ">
+                <div class="card-body">
                     <!-- Post -->
                     @foreach($completeposts as $p)
                     <div class="row pb-2">

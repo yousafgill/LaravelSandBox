@@ -40,7 +40,10 @@ class CreatePost extends Component
         $this->sessionteamslug=session('tenant')->team_slug;
         $tm=Team::where('team_slug','=',$this->sessionteamslug)->first();
         $this->sessionteamid=$tm->id;
+        
+        
         // dd($this->sessionteamid);
+
     }
 
     public function render()
@@ -79,7 +82,8 @@ class CreatePost extends Component
         $pst->slug = $this->slug;
         $pst->detail = $this->detail;
         $pst->status_id = 1;
-        $pst->owner_id = 1;
+        $pst->owner_id = $user->id;
+        $pst->is_new = 1;
         $pst->category_id = 1;
         $pst->votes = 1;
         $pst->user_id =  $user->id;

@@ -18,13 +18,13 @@
             <ul class="nav nav-tabs nav-tabs-vertical flex-column mr-md-3 wmin-md-300 mb-md-0 border-bottom-0">
                 <!-- <ul class="nav nav-pills flex-column mr-lg-3 wmin-lg-250 mb-lg-0  "> -->
                 <li class="nav-item"><a href="#tab-appearance" class="nav-link active" data-toggle="tab"><i class="icon-browser mr-2"></i> Appearance</a></li>
-                <li class="nav-item"><a href="#tab-behaviour" class="nav-link" data-toggle="tab"><i class="icon-rocket mr-2"></i> Behaviour</a></li>
-                <li class="nav-item"><a href="#tab-board-url" class="nav-link" data-toggle="tab"><i class="icon-link mr-2"></i> Board URL</a></li>
-                <li class="nav-item"><a href="#tab-moderation" class="nav-link" data-toggle="tab"><i class="icon-checkbox-checked mr-2"></i> Moderation</a></li>
-                <li class="nav-item"><a href="#tab-statuses" class="nav-link" data-toggle="tab"><i class="icon-touch mr-2"></i> Statuses</a></li>
-                <li class="nav-item"><a href="#tab-tags" class="nav-link" data-toggle="tab"><i class="icon-price-tags mr-2"></i> Tags</a></li>
-                <li class="nav-item"><a href="#tab-integrations" class="nav-link" data-toggle="tab"><i class="icon-share4 mr-2"></i> Integrations</a></li>
-                <li class="nav-item"><a href="#tab-permissions" class="nav-link" data-toggle="tab"><i class="icon-user-lock mr-2"></i> Access & Permissions</a></li>
+                <!-- <li class="nav-item"><a href="#tab-behaviour" class="nav-link" data-toggle="tab"><i class="icon-rocket mr-2"></i> Behaviour</a></li> -->
+                <!-- <li class="nav-item"><a href="#tab-board-url" class="nav-link" data-toggle="tab"><i class="icon-link mr-2"></i> Board URL</a></li> -->
+                <!-- <li class="nav-item"><a href="#tab-moderation" class="nav-link" data-toggle="tab"><i class="icon-checkbox-checked mr-2"></i> Moderation</a></li> -->
+                <!-- <li class="nav-item"><a href="#tab-statuses" class="nav-link" data-toggle="tab"><i class="icon-touch mr-2"></i> Statuses</a></li> -->
+                <!-- <li class="nav-item"><a href="#tab-tags" class="nav-link" data-toggle="tab"><i class="icon-price-tags mr-2"></i> Tags</a></li> -->
+                <!-- <li class="nav-item"><a href="#tab-integrations" class="nav-link" data-toggle="tab"><i class="icon-share4 mr-2"></i> Integrations</a></li> -->
+                <!-- <li class="nav-item"><a href="#tab-permissions" class="nav-link" data-toggle="tab"><i class="icon-user-lock mr-2"></i> Access & Permissions</a></li> -->
                 
             </ul>
 

@@ -27,6 +27,7 @@ class CreateCommentsTable extends Migration
             $table->string('image_url')->nullable();
             $table->integer('likes')->nullable()->default(0);
             $table->boolean('is_spam')->nullable()->default(0);
+            $table->tinyInteger('is_new')->nullable()->default(1);
             
             $table->timestamps();
             $table->softDeletes($column = 'deleted_at', $precision = 0);

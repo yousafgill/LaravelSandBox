@@ -48,4 +48,11 @@ class Team extends JetstreamTeam
     public function invitations() {
         return $this->hasMany('App\Models\Invitation');
     }
+
+    public function portal(Request $request)
+    {
+        return $request->user()->currentTeam->redirectToBillingPortal(
+            route('dashboard')
+        );
+    }
 }

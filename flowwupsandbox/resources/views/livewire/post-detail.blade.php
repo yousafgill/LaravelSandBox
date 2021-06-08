@@ -34,7 +34,7 @@
                                 @if(isset($SelectedPost->estimated))
                                 <li class="list-inline-item">
                                     <a href="#">
-                                        <!-- <span class="badge badge-warning float-right"> -->
+                                        <!-- <span class="badge  badge-warning float-right"> -->
                                         due {{\Carbon\Carbon::createFromTimeStamp(strtotime($SelectedPost->estimated))->diffForHumans()}}
                                         <!-- </span> -->
                                     </a>
@@ -54,7 +54,8 @@
                                     </div>
                                 </form>
                             </div>
-                            <!--/COMMENT BOX -->
+                             <!--/COMMENT BOX -->
+                             
                         </div>
                     </li>
                     <!--END: Top Level Post -->

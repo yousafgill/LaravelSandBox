@@ -23,6 +23,7 @@
                     <th>Posts</th>
                     <th>Comments</th>
                     <th>Upvotes</th>
+                    <th>Visibility</th>
                     <th></th>
                 </tr>
             </thead>
@@ -34,19 +35,26 @@
                 <tr>
                 @endif
                     <td>{{$b->boardname}}
-                        <br>
-                        <a href="{{route('showboard.public',$b->slug)}}" target="_blank">View Live <i class="icon icon-new-tab"></i></a>
+                        @if($b->deleted_at==null)
+                            <br>
+                            <a href="{{route('showboard.public',$b->slug)}}" target="_blank">View Live <i class="icon icon-new-tab"></i></a>
+                        @endif
                     </td>
-                    <td>{{$b->totalposts}}
+                    <td>
+                        {{$b->totalposts}}
                         <br />
-                        <a href="#">2 pending </a>
+                        <a href="#">{{$b->newposts}} new posts </a>
                     </td>
-                    <td>8
+                    <td>
+                        {{$b->totalcomments}}
                         <br />
-                        <a href="#">1 pending </a>
+                        <a href="#">{{$b->newcomments}} new comments </a>
                     </td>
                     <td>
                         {{$b->totalvotes}}
+                    </td>
+                    <td>
+                        {{$b->access_type}}
                     </td>
                     @if($b->deleted_at!=null)
                     <td class="text-right">

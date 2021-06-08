@@ -41,7 +41,7 @@
             </div>
             <!-- /horizotal form -->
 
-        </div>
+        </div> 
         <div class="col-md-4">
             <!-- Vertical form -->
             <div class="card">
@@ -93,14 +93,14 @@
                     </div>
                 </div>
 
-                <div class="card-body p-2 ">
+                <div class="card-body">
                     <!-- Post -->
                     @foreach($completeposts as $p)
                     <div class="row pb-2">
                         <div class="col-2">
                             <div class="d-flex justify-content-center flex-column bg-light border rounded p-0">
                                 <a href="#" class="text-center  text-secondary" wire:click.prevent="$emit('StatsDashboardUpVotedHandler',{{$p->id}})"><i class="icon-arrow-up5 icon-2x p-0"></i></a>
-                                <div class="bg-light pt-0 pb-1 px-1 rounded text-center">
+                                <div class="bg-light pt-0 pb-1 px-1  text-center">
                                     {{$p->totalvotes}}
                                 </div>
                             </div>

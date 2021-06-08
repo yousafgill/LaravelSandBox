@@ -28,9 +28,15 @@ class RoadmapPublic extends Component
     }
 
     public function SetSessionTeamId(){
-        $this->sessionteamslug=session('tenant')->team_slug;
-        $tm=Team::where('team_slug','=',$this->sessionteamslug)->first();
-        $this->sessionteamid=$tm->id;
+        if(session('tenant') !=null){
+            $this->sessionteamslug=session('tenant')->team_slug ;
+            $tm=Team::where('team_slug','=',$this->sessionteamslug)->first() ? : abort(404);
+            $this->sessionteamid=$tm->id;
+    
+        }
+        else{
+            abort(404);
+        }
         // dd($this->sessionteamid);
     }
     /**

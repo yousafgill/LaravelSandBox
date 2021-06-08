@@ -29,7 +29,7 @@
                     <p> {{ $post->detail}} </p>
                     <ul class="list-inline font-size-sm mb-0">
                         <li class="list-inline-item">{{$post->totalvotes}} <a href="#"><i class="icon-arrow-up22 text-success"></i></a></li>
-                        <li class="list-inline-item">22 <a href="#"><i class="icon-comment-discussion text-primary"></i></a></li>
+                        <li class="list-inline-item"> <a href="#"><i class="icon-comment-discussion text-primary"></i></a></li>
                         <li class="list-inline-item"><span class="badge bg-{{$post->status_color}} ml-2">{{$post->status_title}}</span></li>
                     </ul>
                 </div>

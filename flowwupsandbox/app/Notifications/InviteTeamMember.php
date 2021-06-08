@@ -16,6 +16,7 @@ class InviteTeamMember extends Notification
      *
      * @return void
      */
+     
     public function __construct()
     {
         //

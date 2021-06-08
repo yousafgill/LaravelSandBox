@@ -52,9 +52,11 @@ return [
     |
     */
 
-    'url' => env('APP_URL', 'http://localhost:8000'),
+    'url' => env('APP_URL', 'http://admin.flowwup.com'),
 
     'asset_url' => env('ASSET_URL', null),
+    
+    'hostname' => env('HOST_NAME','flowwup.com/dashboard'),
 
     /*
     |--------------------------------------------------------------------------
@@ -122,6 +124,17 @@ return [
     'key' => env('APP_KEY'),
 
     'cipher' => 'AES-256-CBC',
+
+
+
+    /**
+    /----------------------------------------------------------------------------
+    / Free Trial Days
+    /----------------------------------------------------------------------------
+    /  This is number of days when a trial period will be assigned
+    */
+
+    'free_trial_days' => 14,
 
     /*
     |--------------------------------------------------------------------------
@@ -230,5 +243,6 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
 
     ],
-
+    
+   
 ];

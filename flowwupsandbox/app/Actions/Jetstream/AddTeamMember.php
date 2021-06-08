@@ -57,7 +57,7 @@ class AddTeamMember implements AddsTeamMembers
     /**
      * Validate the add member operation.
      *
-     * @param  mixed  $team
+     * @pa]ram  mixed  $team
      * @param  string  $email
      * @param  string|null  $role
      * @return void
@@ -69,9 +69,9 @@ class AddTeamMember implements AddsTeamMembers
             'role' => $role,
         ], $this->rules(), [
             'email.exists' => __('We were unable to find a registered user with this email address.'),
-        ])->after(
-            $this->ensureUserIsNotAlreadyOnTeam($team, $email)
-        )->validateWithBag('addTeamMember');
+        ])
+        ->after($this->ensureUserIsNotAlreadyOnTeam($team, $email))
+        ->validateWithBag('addTeamMember');
     }
 
     /**

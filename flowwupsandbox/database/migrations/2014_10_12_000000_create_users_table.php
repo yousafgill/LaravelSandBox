@@ -22,6 +22,9 @@ class CreateUsersTable extends Migration
             $table->rememberToken();
             $table->foreignId('current_team_id')->nullable();
             $table->text('profile_photo_path')->nullable();
+            $table->enum('plan_mode',['Trial','Subscription','Invite','Guest'])->nullable();
+            $table->datetime('trial_until')->nullable();
+            $table->datetime('plan_until')->nullable();
             $table->timestamps();
         });
     }

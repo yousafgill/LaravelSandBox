@@ -20,6 +20,11 @@
         <link href="/theme/assets/css/custom.css" rel="stylesheet" type="text/css">
         <!--END: Global Stylesheets -->
 
+        <!-- Stripe JS -->
+        <script src="https://js.stripe.com/v3/"></script>
+
+        <!-- /Stripe JS -->
+
         <!--BEGIN: Alpine JS -->
         <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.8.0/dist/alpine.min.js" defer></script>
 

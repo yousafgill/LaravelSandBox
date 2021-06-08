@@ -26,6 +26,7 @@ Route::get('/', function () {
         return view('welcome');
     }
 });
+
 // Route::middleware(['auth:sanctum', 'verified'])->get('/', function () {
 //     if(Auth::user()->current_team_id==null)
 //         {return redirect()->route('roadmap.public');}
@@ -50,6 +51,7 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/dashboardv1', function ()
     return view('dashboardv1');
 })->name('dashboardv1');
 
+
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard/posts/{id}', function ($id) {
     if(Auth::user()->current_team_id==null)
         {return redirect()->route('roadmap.public');}
@@ -69,11 +71,16 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard/editpost/{id}',
 Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::post('/stripe/checkout', [\App\Http\Controllers\StripeController::class, 'checkout'])->name('stripe.checkout');
     Route::get('/stripe/portal', [\App\Http\Controllers\StripeController::class, 'portal'])->name('stripe.portal');
+    Route::get('/stripe/success', [\App\Http\Controllers\StripeController::class, 'success'])->name('stripe.success');
 });
 
 Route::post(
     'stripe/webhook',
     '\App\Http\Controllers\WebhookController@handleWebhook'
+);
+Route::post(
+    'stripe/checkoutcompleted',
+    '\App\Http\Controllers\WebhookController@handleCheckoutSessionCompleted'
 );
 
 Route::middleware(['auth:sanctum', 'verified'])->group(function () {

@@ -50,10 +50,15 @@ class EditPost extends Component
         $this->detail=$this->SelectedPost->detail;
     }
   public function SetSessionTeamId(){
-        $this->sessionteamslug=session('tenant')->team_slug;
-        $tm=Team::where('team_slug','=',$this->sessionteamslug)->first();
+    if(session('tenant') !=null){
+        $this->sessionteamslug=session('tenant')->team_slug ;
+        $tm=Team::where('team_slug','=',$this->sessionteamslug)->first() ? : abort(404);
         $this->sessionteamid=$tm->id;
-        // dd($this->sessionteamid);
+
+    }
+    else{
+        abort(404);
+    }
     }
     protected function generateSlug($string = null, $separator = "-")
     {

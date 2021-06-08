@@ -8,6 +8,12 @@
     <div class="card-body">
         <form wire:submit.prevent="submitForm">
             <fieldset>
+                @if ($limitreached)
+                <div class="alert alert-danger border-0 alert-dismissible">
+                    <button type="button" class="close" data-dismiss="alert"><span>×</span></button>
+                    <span class="font-weight-semibold">You have reached your limit</span>
+                </div>
+                @endif
                 @if ($success)
                 <div class="alert alert-success border-0 alert-dismissible">
                     <button type="button" class="close" data-dismiss="alert"><span>×</span></button>
@@ -16,7 +22,7 @@
                 @endif
                 <div class="form-group">
                     <x-jet-label for="name" class="control-label" value="{{ __('Board Name') }}" />
-                    <x-jet-input name="name" id="name" type="text" class="form-control" wire:model="name" autofocus />
+                    <x-jet-input name="name" id="name" type="text" class="form-control" wire:model.lazy="name" autofocus />
                     <x-jet-label for="name" class="mt-2" />
                 </div>
                 <div class="form-group">

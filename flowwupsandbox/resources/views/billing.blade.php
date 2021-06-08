@@ -4,85 +4,6 @@
             {{ __('Billing') }} ({{ Auth::user()->currentTeam->name }})
         </h2>
     </x-slot>
-    <!-- Pricing table -->
-    <div class="mb-3" style="display:none;">
-        <h6 class="mb-0 font-weight-semibold">
-            Table view
-        </h6>
-        <span class="text-muted d-block">Simple table with content</span>
-    </div>
-    <div class="card" style="display:none;">
-        <div class="table-responsive">
-            <table class="table table-hover table-striped table-bordered table-lg text-center">
-                <thead>
-                    <tr>
-                        <th class="text-left">Choose a plan</th>
-                        <th>
-                            <h6 class="font-weight-semibold my-1">Starter</h6>
-                            <h4 class="font-weight-semibold mb-0">
-                                $25
-                                <span class="font-size-base text-muted font-weight-normal">/ month</span>
-                            </h4>
-                        </th>
-                        <th>
-                            <h6 class="font-weight-semibold my-1">Growth</h6>
-                            <h4 class="font-weight-semibold mb-0">
-                                $35
-                                <span class="font-size-base text-muted font-weight-normal">/ month</span>
-                            </h4>
-                        </th>
-                        <th>
-                            <h6 class="font-weight-semibold my-1">Business</h6>
-                            <h4 class="font-weight-semibold mb-0">
-                                $49
-                                <span class="font-size-base text-muted font-weight-normal">/ month</span>
-                            </h4>
-                        </th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td class="text-left">Total Active Boards</td>
-                        <td>5</td>
-                        <td>15</td>
-                        <td>Unlimited</td>
-                    </tr>
-                    <tr>
-                        <td class="text-left">Tracked Users</td>
-                        <td>250</td>
-                        <td>2,500</td>
-                        <td>Unlimited</td>
-                    </tr>
-                    <tr>
-                        <td class="text-left">Active Team Members</td>
-                        <td>3</td>
-                        <td>15</td>
-                        <td>Unlimited</td>
-                    </tr>
-                    <tr>
-                        <td class="text-left">Backups</td>
-                        <td><i class="icon-cancel-square2 text-danger"></i></td>
-                        <td><i class="icon-checkbox-checked2 text-success"></i></td>
-                        <td><i class="icon-checkbox-checked2 text-success"></i></td>
-                    </tr>
-                    <tr>
-                        <td class="text-left">24/7 support</td>
-                        <td><i class="icon-cancel-square2 text-danger"></i></td>
-                        <td><i class="icon-cancel-square2 text-danger"></i></td>
-                        <td><i class="icon-checkbox-checked2 text-success"></i></td>
-                    </tr>
-                    <tr class="table-border-solid">
-                        <td> </td>
-                        <td><a class="btn bg-blue" href="#"><i class="icon-cart mr-2"></i> Order</a></td>
-                        <td><a class="btn bg-blue" href="#"><i class="icon-cart mr-2"></i> Order</a></td>
-                        <td><a class="btn bg-blue" href="#"><i class="icon-cart mr-2"></i> Order</a></td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-    </div>
-    <!-- /pricing table -->
-
     <!-- Pricing table two -->
     <div class="mb-3 pt-2">
         <h6 class="mb-0 font-weight-semibold">
@@ -112,7 +33,7 @@
         <div class="card">
             <div class="card-body text-center px-0">
                 <h4 class="mt-2 mb-3">Starter</h4>
-                <h1 class="pricing-table-price"><span class="mr-1">$</span>25
+                <h1 class="pricing-table-price"><span class="mr-1">$</span>35
                 </h1>
                
                 <ul class="pricing-table-list list-unstyled mb-3">
@@ -124,7 +45,7 @@
                     <li><strong><i class="icon-cancel-square2 text-danger"></i></strong> </li>
                     <li><strong><i class="icon-checkbox-checked2 text-success"></i></strong> </li>
                 </ul>
-                <button data-plan="plan_starter"  class="btn bg-primary-400 btn-lg text-uppercase font-size-sm font-weight-semibold">Subscribe</button>
+                <button data-plan="price_1InS0bKZIdFWcYAY4rOG3dNR"  class="btn bg-primary-400 btn-lg text-uppercase font-size-sm font-weight-semibold checkout-btn">Subscribe</button>
             </div>
 
 
@@ -133,17 +54,17 @@
         <div class="card">
             <div class="card-body text-center px-0">
                 <h4 class="mt-2 mb-3">Growth</h4>
-                <h1 class="pricing-table-price"><span class="mr-1">$</span>35</h1>
+                <h1 class="pricing-table-price"><span class="mr-1">$</span>75</h1>
                 <ul class="pricing-table-list list-unstyled mb-3">
                     <li><strong></strong> </li>
-                    <li><strong>5</strong> </li>
+                    <li><strong>1</strong> </li>
                     <li><strong>15</strong> </li>
                     <li><strong>2,500</strong> </li>
                     <li><strong>15</strong> </li>
                     <li><strong><i class="icon-checkbox-checked2 text-success"></i></strong> </li>
                     <li><strong><i class="icon-checkbox-checked2 text-success"></i></strong> </li>
                 </ul>
-                <button data-plan="plan_growth" class="btn bg-pink-600 btn-lg text-uppercase font-size-sm font-weight-semibold">Subscribe</button>
+                <button data-plan="price_1InS0bKZIdFWcYAYzvhQIMaj" class="btn bg-pink-600 btn-lg text-uppercase font-size-sm font-weight-semibold checkout-btn">Subscribe</button>
             </div>
             <div class="ribbon-container">
                 <div class="ribbon bg-pink-600">Popular</div>
@@ -153,22 +74,22 @@
         <div class="card">
             <div class="card-body text-center px-0">
                 <h4 class="mt-2 mb-3">Business</h4>
-                <h1 class="pricing-table-price"><span class="mr-1">$</span>49</h1>
+                <h1 class="pricing-table-price"><span class="mr-1">$</span>125</h1>
                 <ul class="pricing-table-list list-unstyled mb-3">
                     <li><strong></strong> </li>
-                    <li><strong>10</strong> </li>
+                    <li><strong>1</strong> </li>
                     <li><strong>Unlimited</strong> </li>
                     <li><strong>Unlimited</strong> </li>
                     <li><strong>Unlimited</strong> </li>
                     <li><strong><i class="icon-checkbox-checked2 text-success"></i></strong> </li>
                     <li><strong><i class="icon-checkbox-checked2 text-success"></i></strong> </li>
                 </ul>
-                <button data-plan="plan_business" class="btn bg-primary-400 btn-lg text-uppercase font-size-sm font-weight-semibold">Subscribe</button>
+                <button data-plan="price_1InS0bKZIdFWcYAYrab5zPKv" class="btn bg-primary-400 btn-lg text-uppercase font-size-sm font-weight-semibold checkout-btn">Subscribe</button>
             </div>
         </div>
     </div>
     <!-- /pricing table two -->
-    <div>
+    <div class="hidden">
         <div class="max-w-7xl mx-auto py-10 sm:px-6 lg:px-8">
             <div class="mt-10 sm:mt-0">
                 <x-jet-action-section>
@@ -246,7 +167,8 @@ var showErrorMessage = function(message) {
     errorEl.style.display = "block";
 };
 
-var stripe = Stripe('{{ env('STRIPE_KEY') }}');
+var stripe = Stripe('pk_test_51CnW0OKZIdFWcYAYX69ayYYZ7kRLrBnTXyg6RJzDg4KuhOoEsahisxFy62rs70QrlIcYhwhJtT9zyIPdCQl0NNeN00bePJFhjC');
+// var stripe = Stripe('{{ env('STRIPE_KEY') }}');
 var checkoutBtns = document.getElementsByClassName('checkout-btn');
 
 for (var i = 0; i < checkoutBtns.length; i++) {
@@ -254,8 +176,7 @@ for (var i = 0; i < checkoutBtns.length; i++) {
         var plan = e.target.getAttribute("data-plan");
 
         createCheckoutSession(plan).then(function(data) {
-            stripe
-                .redirectToCheckout({
+            stripe.redirectToCheckout({
                     sessionId: data.sessionId
                 })
                 .then(handleResult);

@@ -1,76 +1,115 @@
 <x-guest-layout>
-    <x-jet-authentication-card>
-        <x-slot name="logo">
-            <x-jet-authentication-card-logo />
-        </x-slot>
+    <form class="login-form" method="POST" action="{{ route('register') }}" x-data="{...init(), ...initV2()}">
+        @csrf
+        <div class="card mb-0" style="min-width:350px;">
+            <div class="card-body">
+                <div class="text-center mb-3">
+                    <i class="icon-plus3 icon-2x text-success border-success border-3 rounded-round p-1 mb-3 mt-1"></i>
+                    <h5 class="mb-0">Start your Free Trial</h5>
+                    <span class="d-block text-muted">Free 30-day flowwup trial. No credit card required</span>
+                </div>
 
-        <x-jet-validation-errors class="mb-4" />
-        <form method="POST" action="{{ route('register') }}" x-data="{...init(), ...initV2()}">
-            @csrf
-            <div>
-                <x-jet-label for="name" value="{{ __('Full Name') }}" />
-                <x-jet-input id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name')" required autofocus autocomplete="name" />
-            </div>
-
-            <div class="mt-4">
-                <x-jet-label for="email" value="{{ __('Email') }}" />
-                @if (app('request')->input('email'))
-                <x-jet-input id="email" class="block mt-1 w-full" type="email" name="email" required value="{{ app('request')->input('email') }}" readonly="readonly" />
-                @else
-                <x-jet-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required />
-                @endif
-            </div>
-
-            <div class="mt-4">
-                <x-jet-label for="teamname" value="{{ __('Company/App Name') }}" />
-                @if (app('request')->input('team'))
-                <x-jet-input id="teamname" class="block mt-1 w-full" type="text" name="teamname" required value="{{ app('request')->input('team') }}" readonly="readonly" />
-                @else
-                <x-jet-input id="teamname" x-model="company" x-on:change.prevent="setDomain($event.target.value)" class="block mt-1 w-full" type="text" name="teamname" required />
-                @endif
-            </div>
-
-            <div class="mt-4">
-                <x-jet-label for="team_slug" value="{{ __('Subdomain') }}" />
-                @if (app('request')->input('team'))
-                <x-jet-input id="team_slug" class="block mt-1 w-full" type="text" name="team_slug" required value="{{ app('request')->input('team') }}" readonly="readonly" />
-                @else
-                
-                <div class="flex flex-wrap items-stretch w-full mb-4 relative">
-                    <x-jet-input type="text" id="team_slug" x-model="domain"  name="team_slug" required class="flex-shrink flex-grow flex-auto leading-normal w-px flex-1 border h-10 border-grey-light rounded rounded-r-none px-3 relative" placeholder="subdomain"/>
-                    <!-- <x-jet-input id="team_slug" x-model="domain" class="block mt-1 w-full" type="text" name="team_slug" required readonly="readonly" /> -->
-                    <div class="flex -mr-px">
-                        <span class="flex items-center leading-normal bg-grey-lighter rounded rounded-l-none border border-l-0 border-grey-light px-3 whitespace-no-wrap text-grey-dark text-sm">.flowwup.com</span>
+                <div class="form-group form-group-feedback form-group-feedback-left">
+                    <input id="name" class="form-control" type="text" name="name" required autofocus autocomplete="name" placeholder="full name" />
+                    <div class="form-control-feedback">
+                        <i class="icon-user-check text-muted"></i>
                     </div>
                 </div>
+
+                <div class="form-group form-group-feedback form-group-feedback-left">
+                    @if (app('request')->input('email'))
+                    <input id="email" class="form-control" type="text" name="email" :value="{{ app('request')->input('email') }}" required autofocus autocomplete="email" readonly="readonly" placeholder="email" />
+                    <div class="form-control-feedback">
+                        <i class="icon-mention text-muted"></i>
+                    </div>
+                    @else
+                    <input id="email" class="form-control" type="text" name="email" required autofocus autocomplete="email" placeholder="email" />
+                    <div class="form-control-feedback">
+                        <i class="icon-mention text-muted"></i>
+                    </div>
+                    @endif
+                </div>
+
+                <div class="form-group form-group-feedback form-group-feedback-left">
+                    @if (app('request')->input('team'))
+                    <input id="teamname" class="form-control" type="text" name="teamname" :value="{{ app('request')->input('team') }}" required autofocus readonly="readonly" />
+                    <div class="form-control-feedback">
+                        <i class="icon-command text-muted"></i>
+                    </div>
+                    @else
+                    <input class="form-control" id="teamname" x-model="company" x-on:change.prevent="setDomain($event.target.value)" type="text" name="teamname" required autofocus placeholder="company name" />
+                    <div class="form-control-feedback">
+                        <i class="icon-command text-muted"></i>
+                    </div>
+                    @endif
+                </div>
+                <div class="form-group form-group-feedback form-group-feedback-left">
+                    @if (app('request')->input('team'))
+                    <div class="input-group">
+                        <input type="text" class="form-control" id="team_slug" name="team_slug" required value="{{ app('request')->input('team') }}" readonly="readonly">
+                        <span class="input-group-append">
+                            <span class="input-group-text">.flowwup.com</span>
+                        </span>
+                    </div>
+                    @else
+                    <div class="input-group">
+                        <input type="text" class="form-control" x-model="domain" id="team_slug" name="team_slug" required value="{{ app('request')->input('team') }}" placeholder="sub domain">
+                        <span class="input-group-append">
+                            <span class="input-group-text">.flowwup.com</span>
+                        </span>
+                    </div>
+                    @endif
+                </div>
+
+                <div class="form-group form-group-feedback form-group-feedback-left">
+                    <input id="password" class="form-control" type="password" name="password" required autofocus autocomplete="new-password" placeholder="password" />
+                    <div class="form-control-feedback">
+                        <i class="icon-key text-muted"></i>
+                    </div>
+                </div>
+                <div class="form-group form-group-feedback form-group-feedback-left">
+                    <input id="password_confirmation" class="form-control" type="password" name="password_confirmation" required autofocus autocomplete="new-password" placeholder="confirm password" />
+                    <div class="form-control-feedback">
+                        <i class="icon-key text-muted"></i>
+                    </div>
+                </div>
+
+                @if (app('request')->input('invite'))
+                <input id="invite" class="hidden" type="hidden" name="invite" value="{{ app('request')->input('invite') }}" required />
                 @endif
+
+                <div class="form-group" style="display:none;">
+                    <div class="form-check">
+                        <label class="form-check-label">
+                            <input type="checkbox" name="remember" class="form-input-styled" checked data-fouc>
+                            Send me <a href="#">test account settings</a>
+                        </label>
+                    </div>
+
+                    <div class="form-check">
+                        <label class="form-check-label">
+                            <input type="checkbox" name="remember" class="form-input-styled" checked data-fouc>
+                            Subscribe to monthly newsletter
+                        </label>
+                    </div>
+
+                    <div class="form-check">
+                        <label class="form-check-label">
+                            <input type="checkbox" name="remember" class="form-input-styled" data-fouc>
+                            Accept <a href="#">terms of service</a>
+                        </label>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn bg-teal-400 btn-block">Register <i class="icon-circle-right2 ml-2"></i></button>
+
+                <div class="form-group text-center text-muted content-divider mt-3">
+                    <span class="px-2">Already have an account?</span>
+                </div>
+                <a href="{{route('login')}}" class="btn btn-light btn-block">Sign in</a>
             </div>
-
-            <div class="mt-4">
-                <x-jet-label for="password" value="{{ __('Password') }}" />
-                <x-jet-input id="password" class="block mt-1 w-full" type="password" name="password" required autocomplete="new-password" />
-            </div>
-
-            <div class="mt-4">
-                <x-jet-label for="password_confirmation" value="{{ __('Confirm Password') }}" />
-                <x-jet-input id="password_confirmation" class="block mt-1 w-full" type="password" name="password_confirmation" required autocomplete="new-password" />
-            </div>
-
-            @if (app('request')->input('invite'))
-            <x-jet-input id="invite" class="hidden" type="hidden" name="invite" value="{{ app('request')->input('invite') }}" required />
-            @endif
-
-            <div class="flex items-center justify-end mt-4">
-                <a class="underline text-sm text-gray-600 hover:text-gray-900" href="{{ route('login') }}">
-                    {{ __('Already registered?') }}
-                </a>
-
-                <x-jet-button class="ml-4">
-                    {{ __('Register') }}
-                </x-jet-button>
-            </div>
-        </form>
-    </x-jet-authentication-card>
+        </div>
+    </form>
 </x-guest-layout>
 
 <script>

@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Livewire;
 use Livewire\Component;
 use App\Models\Post;
@@ -58,10 +57,15 @@ class PostDetail extends Component
     }
 
     public function SetSessionTeamId(){
-        $this->sessionteamslug=session('tenant')->team_slug;
-        $tm=Team::where('team_slug','=',$this->sessionteamslug)->first();
-        $this->sessionteamid=$tm->id;
-        // dd($this->sessionteamid);
+        if(session('tenant') !=null){
+            $this->sessionteamslug=session('tenant')->team_slug ;
+            $tm=Team::where('team_slug','=',$this->sessionteamslug)->first() ? : abort(404);
+            $this->sessionteamid=$tm->id;
+    
+        }
+        else{
+            abort(404);
+        }
     }
 
     /**
@@ -135,7 +139,8 @@ class PostDetail extends Component
            // dd($this->status_id);
             $pid=$this->SelectedPost->id;
             Post::find($pid)->update([
-                'status_id'=>$this->status_id
+                'status_id'=>$this->status_id,
+                'is_new' => 0
             ]);
     }
 
@@ -155,7 +160,7 @@ class PostDetail extends Component
     /**
      * Event Handler for Selected Post Changed from Post List
      *
-     * @param [type] $postid
+     * @param [type ] $postid
      * @return void
      */
     public function handlepostselected($postid){
@@ -204,6 +209,7 @@ class PostDetail extends Component
         $comment->comment_level =  1;
         $comment->is_reply =  false;
         $comment->reply_to =  0;
+        $comment->is_new =  1;
         $comment->save();
         $this->success = 'Comment Posted';
         $this->clearFields();
@@ -236,6 +242,7 @@ class PostDetail extends Component
         $comment->user_id =  $user->id;
         $comment->comment_level =  2;
         $comment->is_reply =  true;
+        $comment->is_new =  1;
         $comment->reply_to =  $commetid;
         $comment->save();
         $this->success = 'Reply Posted';

@@ -27,6 +27,7 @@ class CreatePostsTable extends Migration
             $table->string('public_url')->nullable();
             
             $table->boolean('is_spam')->nullable()->default(0);
+            $table->tinyInteger('is_new')->nullable()->default(1);
             
             $table->unsignedInteger('votes')->nullable()->default(0);
             $table->date($column = 'estimated', $precision = 0)->nullable();

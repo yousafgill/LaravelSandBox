@@ -93,8 +93,7 @@ class ShowPublicBoard extends Component
         $this->boardfilter=$this->board->id;
         $this->statusarray=status::all()->pluck('id')->toArray();
         $this->statuslist=status::all();
-        // $this->Loadposts();
-        
+       
     }
 
     public function Loadposts(){
