@@ -107,7 +107,7 @@ class DatabaseSeeder extends Seeder
 
         $sub=\DB::table('subscriptions')->insert([
             'team_id' => $tm->id,
-            'name' => 'Business Plan',
+            'name' => 'Business',
             'stripe_id' => 'price_1InS0bKZIdFWcYAYrab5zPKv',
             'stripe_status' => 'Active',
             'stripe_plan' => 'price_1InS0bKZIdFWcYAYrab5zPKv',
