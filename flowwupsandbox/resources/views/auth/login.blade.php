@@ -1,19 +1,14 @@
 <x-guest-layout>
     <!-- Login form -->
-    @if (session('status'))
-    <div class="mb-4 font-medium text-sm text-green-600">
-        {{ session('status') }}
-    </div>
-    @endif
-    <form class="login-form" form method="POST" action="{{ route('login') }}">
-        @csrf
-        <div class="card mb-0" style="min-width:350px;">
-            <div class="card-body">
-                <div class="text-center mb-3">
-                    <i class="icon-lock2 icon-2x text-success border-success border-3 rounded-round p-1 mb-3 mt-1"></i>
-                    <h5 class="mb-0">Flowwup Sign in</h5>
-                </div>
+    <div class="card mb-0" style="min-width:350px;">
 
+        <div class="card-body">
+            <div class="text-center mb-3">
+                <i class="icon-lock2 icon-2x text-success border-success border-3 rounded-round p-1 mb-3 mt-1"></i>
+                <h5 class="mb-0">Flowwup Sign in</h5>
+            </div>
+            <form class="login-form" form method="POST" action="{{ route('login') }}">
+                @csrf
                 <div class="form-group form-group-feedback form-group-feedback-left">
                     <input type="text" class="form-control" placeholder="Email" id="email" name="email" :value="old('email')" required autofocus>
                     <div class="form-control-feedback">
@@ -36,23 +31,35 @@
                         </label>
                     </div>
                     @if (Route::has('password.request'))
-                        <a href="{{ route('password.request') }}" class="ml-auto">Forgot password?</a>
+                    <a href="{{ route('password.request') }}" class="ml-auto">Forgot password?</a>
                     @endif
                 </div>
 
                 <div class="form-group">
                     <button type="submit" class="btn btn-primary btn-block">Sign in <i class="icon-circle-right2 ml-2"></i></button>
                 </div>
+            </form>
+            <div class="form-group text-center text-muted content-divider">
+                <span class="px-2">Don't have an account?</span>
+            </div>
 
-                <div class="form-group text-center text-muted content-divider">
-                    <span class="px-2">Don't have an account?</span>
-                </div>
-
-                <div class="form-group">
-                    <a href="{{route('register')}}" class="btn btn-light btn-block">Sign up</a>
-                </div>
+            <div class="form-group">
+                <a href="{{route('register')}}" class="btn btn-light btn-block">Sign up</a>
             </div>
         </div>
-    </form>
+
+        <div class="card-body">
+            @if (session('status'))
+            <div class="row">
+                <div class="col-12">
+                    <div class="mb-4 font-medium text-sm text-green-600">
+                        {{ session('status') }}
+                    </div>
+                </div>
+            </div>
+            @endif
+        </div>
+    </div>
+
     <!-- /login form -->
 </x-guest-layout>

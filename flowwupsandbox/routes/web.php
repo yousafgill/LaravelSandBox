@@ -23,7 +23,8 @@ Route::get('/', function () {
             return view('dashboard');
         }
     }else{
-        return view('welcome');
+        // return view('welcome');
+        return redirect()->route('login');
     }
 });
 
@@ -83,11 +84,8 @@ Route::post(
     '\App\Http\Controllers\WebhookController@handleCheckoutSessionCompleted'
 );
 
-Route::middleware(['auth:sanctum', 'verified'])->group(function () {
-    Route::get('/billing', function() {
-        return view('billing');
-    })->name('billing');
-});
+
+
 
 //Create Board
 /*
@@ -118,6 +116,13 @@ use App\Http\Livewire\ShareBoard;
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard/shareboard/{id}', ShareBoard::class)->name('dashboard.shareboard');
 
 
+use App\Http\Livewire\BillingPlan;
+Route::middleware(['auth:sanctum', 'verified'])->get('/billing', BillingPlan::class)->name('billing');
+
+use App\Http\Livewire\CancelSubscription;
+Route::middleware(['auth:sanctum', 'verified'])->get('/subscription/cancel', CancelSubscription::class)->name('subscription.cancel');
+
+
 use App\Http\Livewire\RoadmapPublic;
 Route::get('/roadmap', RoadmapPublic::class)->name('roadmap.public');
 
@@ -127,11 +132,10 @@ Route::get('/boards/{id}', ShowPublicBoard::class)->name('showboard.public');
 use App\Http\Livewire\ShowPublicPost;
 Route::get('/posts/{id}', ShowPublicPost::class)->name('showpost.public');
 
-
 Route::get('storage/profile-photos/{image}', function($image = null)
 {
-    
     $path = storage_path().'/app/public/profile-photos/' . $image;
+    // $path = 'profile-photos/' . $image;
     if (file_exists($path)) { 
         return Response::download($path);
     }

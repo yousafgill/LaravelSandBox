@@ -1,4 +1,5 @@
 <x-guest-layout>
+    <x-jet-validation-errors class="mb-4" />
     <form class="login-form" method="POST" action="{{ route('register') }}" x-data="{...init(), ...initV2()}">
         @csrf
         <div class="card mb-0" style="min-width:350px;">
@@ -18,7 +19,7 @@
 
                 <div class="form-group form-group-feedback form-group-feedback-left">
                     @if (app('request')->input('email'))
-                    <input id="email" class="form-control" type="text" name="email" :value="{{ app('request')->input('email') }}" required autofocus autocomplete="email" readonly="readonly" placeholder="email" />
+                    <input id="email" class="form-control" type="text" name="email" value="{{  app('request')->input('email') }}" required autofocus autocomplete="email" readonly="readonly" placeholder="email" />
                     <div class="form-control-feedback">
                         <i class="icon-mention text-muted"></i>
                     </div>
@@ -32,7 +33,7 @@
 
                 <div class="form-group form-group-feedback form-group-feedback-left">
                     @if (app('request')->input('team'))
-                    <input id="teamname" class="form-control" type="text" name="teamname" :value="{{ app('request')->input('team') }}" required autofocus readonly="readonly" />
+                    <input id="teamname" class="form-control" type="text" name="teamname" value="{{ app('request')->input('team') }}" required autofocus readonly="readonly" />
                     <div class="form-control-feedback">
                         <i class="icon-command text-muted"></i>
                     </div>

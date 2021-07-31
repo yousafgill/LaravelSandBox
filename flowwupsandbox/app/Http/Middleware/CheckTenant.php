@@ -8,6 +8,7 @@ use App\Models\Team;
 use App\Models\User;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Cookie;
 
 class CheckTenant
 {
@@ -20,19 +21,20 @@ class CheckTenant
      */
     public function handle(Request $request, Closure $next)
     {
-        // dd($request->getHost());
-       
-        $validuri=array('/login','/register','/forgot-password','/roadmap','/logout');
+      
+      $old_cookie_value=Cookie::get('flowwup_session');
+        $validuri=array('/login','/register','/forgot-password','/roadmap','/logout','/dashboard');
         $d=explode('.', $request->getHost(), 2);
+        // dd(sizeof($d));
         if(sizeof($d)==1){
           if( !in_array($request->getRequestUri(),$validuri))
             {
               // $request->url = \config('app.url').'/welcome/';
               $request->server->set('REQUEST_URI','/welcome');
             }
-            $request->session()->put('tenant', '');
-            // dd($request);
+            // $request->session()->put('tenant', 'gill');
             return $next($request);
+            
         }
         else{
 
@@ -45,15 +47,24 @@ class CheckTenant
             // dd($request->getRequestUri());
 
             if(Auth::check()){
+
               if(Auth::user()->current_team_id !=$tenant->id){
                 $userteam=Team::find(Auth::user()->current_team_id) ? :abort(404);
                 $userdomain=$userteam->team_slug;
                 $host=\config('app.hostname');
                 if(!in_array($request->getRequestUri(),$validuri)){
-                  // abort(403);
+                  
+                  $request->session()->put('tenant', $userdomain);
+                  
                   $tourl='http://'.$userdomain.'.'.$host;
-                  return redirect($tourl);
-                  // return redirect()->route('roadmap.public');
+                  $request->flash();
+                  // dd($request);
+                  // return $next($request);
+                  // $v=Cookie::get('flowwup_session');
+                  Cookie::queue(cookie('flowwup_session', $old_cookie_value, $minute = 10,$domain=$userdomain.'.'.$host));
+
+                  // dd($v);
+                  return redirect($tourl)->withInput($request->all());
                 }
               }
               else{

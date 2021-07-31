@@ -52,6 +52,10 @@
                 <a href="#" class="navbar-nav-link bg-success">
                     Your successfully subscribed till {{auth()->user()->plan_until->toFormattedDateString()}}
                 </a>
+                @elseif(auth()->user()->plan_mode =='Cancelled')
+                <a href="#" class="navbar-nav-link bg-warning">
+                    You have cancelled your plan, your plan will end till  {{auth()->user()->plan_until->toFormattedDateString()}}
+                </a>
                 @endif
             </li>
 

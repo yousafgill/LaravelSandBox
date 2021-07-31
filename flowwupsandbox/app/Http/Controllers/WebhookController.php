@@ -13,33 +13,39 @@ class WebhookController extends CashierController
 {
     public function handleCheckoutSessionCompleted(Request $request)
     {
-        // $payload = json_decode($request->getContent(), true);
-        // $data = $payload['data']['object'];
+
        $data = $request->data['object'];
-        // $data = $payload->data['object'];
-        
-    //    dd($r['id']);
-        // dd($r['client_reference_id']);
-        // dd($data);
        $team = Team::findOrFail($data['client_reference_id']);
        
-    //    dd($plan);
+
        DB::transaction(function () use ($data, $team) {
         $team->update(['stripe_id' => $data['customer']]);
         $tid=$team->id;
         $usrid=$team->user_id;
         $team_owner=User::find($usrid);
-            // $team->subscriptions()->create([
-            // 'name' => 'default',
-            // 'stripe_id' => $data['subscription'],
-            // 'stripe_status' => 'active'
-            // ]);
+          
+            $existing=\DB::table('subscriptions')
+                        ->where('team_id',$tid)
+                        ->join('plans','plans.name','=','subscriptions.name')
+                        ->first();
 
+            $currentplan=$existing->plan_fee*1;
+            
+            $existing_plan_end=$existing->ends_at;
 
             $plan_amount=$data['amount_subtotal'];
             $plan_amount_fee=$plan_amount/100;
             $plan=plan::where('plan_fee','=',$plan_amount_fee)->first();
-            $plan_end=Carbon::now()->addMonths(1);
+            $plan_end;
+            if($plan_amount_fee >= $currentplan)
+            {
+                $dt=carbon::create($existing_plan_end);
+                $plan_end=$dt->addMonths(1);
+            }else{
+                $plan_end=Carbon::now()->addMonths(1);
+            }
+            
+            // dd($plan_end);
             
             $team->subscriptions()->updateOrInsert(
                 ['team_id' =>$tid ],

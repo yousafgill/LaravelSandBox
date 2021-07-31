@@ -1,13 +1,12 @@
-<x-app-layout>
+<div>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
             {{ __('Billing') }} ({{ Auth::user()->currentTeam->name }})
         </h2>
     </x-slot>
-    <!-- Pricing table two -->
     <div class="mb-3 pt-2">
         <h6 class="mb-0 font-weight-semibold">
-            OLD Chose a Plan
+            Chose a Billing Plan
         </h6>
         <span class="text-muted d-block">FLOWWUP uses Stripe for billing. You will be taken to Stripe's website to manage your subscription.</span>
     </div>
@@ -30,12 +29,12 @@
             </div>
         </div>
 
-        <div class="card">
+
+        <div class="card {{$starter_class}}">
             <div class="card-body text-center px-0">
                 <h4 class="mt-2 mb-3">Starter</h4>
                 <h1 class="pricing-table-price"><span class="mr-1">$</span>35
                 </h1>
-               
                 <ul class="pricing-table-list list-unstyled mb-3">
                     <li><strong></strong> </li>
                     <li><strong>1</strong> </li>
@@ -45,13 +44,20 @@
                     <li><strong><i class="icon-cancel-square2 text-danger"></i></strong> </li>
                     <li><strong><i class="icon-checkbox-checked2 text-success"></i></strong> </li>
                 </ul>
-                <button data-plan="price_1InS0bKZIdFWcYAY4rOG3dNR"  class="btn bg-primary-400 btn-lg text-uppercase font-size-sm font-weight-semibold checkout-btn">Subscribe</button>
+                
+                @if($planname=='Starter')
+                    @if($planstatus=="Cancel")
+                        <a href="#" wire:click.prevent="$emit('reactivateplan')" class="btn bg-success btn-lg text-uppercase font-size-sm font-weight-semibold">Re-Activate</a>
+                    @else
+                        <a href="{{route('subscription.cancel')}}" class="btn bg-danger btn-lg text-uppercase font-size-sm font-weight-semibold">Cancel Subscription</a>
+                    @endif
+                @else
+                    <button data-plan="price_1InS0bKZIdFWcYAY4rOG3dNR" class="btn bg-primary-400 btn-lg text-uppercase font-size-sm font-weight-semibold checkout-btn">{{$sbtn}}</button>
+                @endif
             </div>
-
-
         </div>
 
-        <div class="card">
+        <div class="card {{$growth_class}}">
             <div class="card-body text-center px-0">
                 <h4 class="mt-2 mb-3">Growth</h4>
                 <h1 class="pricing-table-price"><span class="mr-1">$</span>75</h1>
@@ -64,14 +70,23 @@
                     <li><strong><i class="icon-checkbox-checked2 text-success"></i></strong> </li>
                     <li><strong><i class="icon-checkbox-checked2 text-success"></i></strong> </li>
                 </ul>
-                <button data-plan="price_1InS0bKZIdFWcYAYzvhQIMaj" class="btn bg-pink-600 btn-lg text-uppercase font-size-sm font-weight-semibold checkout-btn">Subscribe</button>
+                
+                @if($planname=='Growth')
+                    @if($planstatus=="Cancel")
+                        <a href="#" wire:click.prevent="$emit('reactivateplan')" class="btn bg-success btn-lg text-uppercase font-size-sm font-weight-semibold">Re-Activate</a>
+                    @else
+                        <a href="{{route('subscription.cancel')}}" class="btn bg-danger btn-lg text-uppercase font-size-sm font-weight-semibold">Cancel Subscription</a>
+                    @endif
+                @else
+                    <button data-plan="price_1InS0bKZIdFWcYAYzvhQIMaj" class="btn bg-pink-600 btn-lg text-uppercase font-size-sm font-weight-semibold checkout-btn">{{$gbtn}}</button>
+                @endif
             </div>
             <div class="ribbon-container">
                 <div class="ribbon bg-pink-600">Popular</div>
             </div>
         </div>
 
-        <div class="card">
+        <div class="card {{$business_class}}">
             <div class="card-body text-center px-0">
                 <h4 class="mt-2 mb-3">Business</h4>
                 <h1 class="pricing-table-price"><span class="mr-1">$</span>125</h1>
@@ -84,52 +99,22 @@
                     <li><strong><i class="icon-checkbox-checked2 text-success"></i></strong> </li>
                     <li><strong><i class="icon-checkbox-checked2 text-success"></i></strong> </li>
                 </ul>
-                <button data-plan="price_1InS0bKZIdFWcYAYrab5zPKv" class="btn bg-primary-400 btn-lg text-uppercase font-size-sm font-weight-semibold checkout-btn">Subscribe</button>
+                
+                @if($planname=='Business')
+                    @if($planstatus=="Cancel")
+                        <a href="#" wire:click.prevent="$emit('reactivateplan')"  class="btn bg-success btn-lg text-uppercase font-size-sm font-weight-semibold">Re-Activate</a>
+                    @else
+                        <a href="{{route('subscription.cancel')}}" class="btn bg-danger btn-lg text-uppercase font-size-sm font-weight-semibold">Cancel Subscription</a>
+                    @endif
+                @else
+                    <button data-plan="price_1InS0bKZIdFWcYAYrab5zPKv" class="btn bg-primary-400 btn-lg text-uppercase font-size-sm font-weight-semibold checkout-btn">{{$bbtn}}</button>
+                @endif
+
             </div>
         </div>
     </div>
-    <!-- /pricing table two -->
-    <div class="hidden">
-        <div class="max-w-7xl mx-auto py-10 sm:px-6 lg:px-8">
-            <div class="mt-10 sm:mt-0">
-                <x-jet-action-section>
-                    <x-slot name="title">
-                        {{ __('Manage Subscription') }}
-                    </x-slot>
 
-                    <x-slot name="description">
-                        {{ __('Subscribe, upgrade, downgrade or cancel your subscription.') }}
-                    </x-slot>
-
-                    <x-slot name="content">
-                        <p>{{ env('APP_NAME') . __(' uses Stripe for billing. You will be taken to Stripe\'s website to manage your subscription.') }}</p>
-
-                        @if (Auth::user()->currentTeam->subscribed('default'))
-                        <div class="mt-6">
-                            <a class="btn" href="{{ route('stripe.portal') }}">
-                                {{ __('Manage Subscription') }}
-                            </a>
-                        </div>
-                        @else
-                        <div id="error-message" class="hidden p-2 mt-4 bg-pink-100"></div>
-
-                        <div class="mt-4">
-                            <button data-plan="plan_XXXXX" class="btn checkout-btn">
-                                {{ __('Subscribe to Plan 1') }}
-                            </button>
-                        </div>
-                        <div class="mt-4">
-                            <button data-plan="plan_XXXXX" class="btn checkout-btn">
-                                {{ __('Subscribe to Plan 2') }}
-                            </button>
-                        </div>
-                        @endif
-                    </x-slot>
-                </x-jet-action-section>
-            </div>
-        </div>
-    </div>
-</x-app-layout>
+</div>
 
 <script>
 var handleFetchResult = function(result) {

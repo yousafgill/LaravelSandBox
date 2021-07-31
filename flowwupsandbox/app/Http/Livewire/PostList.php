@@ -22,10 +22,7 @@ class PostList extends Component
         public $board_counter=0;
         public $status_counter=0;
         public $datefilter;
-
         public $boardslimit=0;
-
-
         public $sessionteamid;
         public $sessionteamslug;
 
@@ -33,7 +30,7 @@ class PostList extends Component
                
                 $this->SetSessionTeamId();
                 $this->CheckLimit();
-                $this->boardfilter=Board::oldest()->take(1)->pluck('id')->toArray();
+                $this->boardfilter=Board::oldest()->take($this->boardslimit)->pluck('id')->toArray();
                 $this->statusarray=Status::all()->pluck('id')->toArray();
         }
         protected $listeners =[
@@ -51,15 +48,15 @@ class PostList extends Component
       
 
         public function SetSessionTeamId(){
-                if(session('tenant') !=null){
-                        $this->sessionteamslug=session('tenant')->team_slug ;
-                        $tm=Team::where('team_slug','=',$this->sessionteamslug)->first() ? : abort(404);
-                        $this->sessionteamid=$tm->id;
-                
-                    }
-                    else{
-                        abort(404);
-                    }
+        if(session('tenant') !=null){
+                $this->sessionteamslug=session('tenant')->team_slug ;
+                $tm=Team::where('team_slug','=',$this->sessionteamslug)->first() ? : abort(404);
+                $this->sessionteamid=$tm->id;
+        
+        }
+        else{
+                abort(404);
+        }
         }
 
 
@@ -106,7 +103,7 @@ class PostList extends Component
                 }
         }
         public function handleFilterCategoryChanged($catid){
-                dd($catid);
+                // dd($catid);
         }
                 
         public function handlepostselected($postid){

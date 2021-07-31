@@ -29,13 +29,15 @@ class CreateNewUser implements CreatesNewUsers
      */
     public function create(array $input)
     {
+        //dd($input);
+
         Validator::make($input, [
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'teamname' =>['required','string','unique:teams,name'],
+            // 'teamname' =>['required','string','unique:teams,name'],
             'password' => $this->passwordRules(),
         ])->validate();
-
+ 
         $NewUser=DB::transaction(function () use ($input) {
             return tap(User::create([
                 'name' => $input['name'],
@@ -53,10 +55,11 @@ class CreateNewUser implements CreatesNewUsers
                                 $team->users()->attach(
                                     $user,
                                     ['role' => $invitation->role,
-                                    'plan_mode' => 'Invite'
+                                    // 'plan_mode' => 'Invite'
                                     ]
                                 );
                             $user->current_team_id = $team->id;
+                            $user->plan_mode = 'Invite';
                             $user->save();
                             TeamMemberAdded::dispatch($team, $user);
                             $invitation->delete();
@@ -77,7 +80,6 @@ class CreateNewUser implements CreatesNewUsers
             });
            
         });
-        // return redirect('http://gill.localhost:8000/dashboard');
         return $NewUser;
        
     }
