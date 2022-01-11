@@ -57,6 +57,7 @@ return [
     'asset_url' => env('ASSET_URL', null),
     
     'hostname' => env('HOST_NAME','flowwup.com/dashboard'),
+    'appdomain' => env('APP_DOMAIN','flowwup.com'),
 
     /*
     |--------------------------------------------------------------------------

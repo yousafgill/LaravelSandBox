@@ -1,16 +1,17 @@
 <x-guest-layout>
     <!-- Login form -->
-    <div class="card mb-0" style="min-width:350px;">
+    <div class="card card-custom mb-0" style="min-width:350px;">
 
         <div class="card-body">
             <div class="text-center mb-3">
                 <i class="icon-lock2 icon-2x text-success border-success border-3 rounded-round p-1 mb-3 mt-1"></i>
                 <h5 class="mb-0">Flowwup Sign in</h5>
             </div>
-            <form class="login-form" form method="POST" action="{{ route('login') }}">
+            <!-- <form class="login-form" form method="POST" action="{{ route('loginemail.store') }}"> -->
+            <form class="login-form" form method="POST" action="{{ route('publiclogin.store') }}">
                 @csrf
                 <div class="form-group form-group-feedback form-group-feedback-left">
-                    <input type="text" class="form-control" placeholder="Email" id="email" name="email" :value="old('email')" required autofocus>
+                    <input type="email" class="form-control" placeholder="Email" id="email" name="email" :value="old('email')" required autofocus>
                     <div class="form-control-feedback">
                         <i class="icon-mention text-muted"></i>
                     </div>
@@ -23,20 +24,9 @@
                     </div>
                 </div>
 
-                <div class="form-group d-flex align-items-center">
-                    <div class="form-check mb-0">
-                        <label class="form-check-label">
-                            <input type="checkbox" name="remember" class="form-input-styleds" data-foucs>
-                            Remember
-                        </label>
-                    </div>
-                    @if (Route::has('password.request'))
-                    <a href="{{ route('password.request') }}" class="ml-auto">Forgot password?</a>
-                    @endif
-                </div>
 
                 <div class="form-group">
-                    <button type="submit" class="btn btn-primary btn-block">Sign in <i class="icon-circle-right2 ml-2"></i></button>
+                    <button type="submit" class="btn btn-primary btn-block">Continue <i class="icon-circle-right2 ml-2"></i></button>
                 </div>
             </form>
             <div class="form-group text-center text-muted content-divider">
@@ -48,7 +38,8 @@
             </div>
         </div>
 
-        <div class="card-body">
+       
+            <x-jet-validation-errors class="mb-4 text-danger" />
             @if (session('status'))
             <div class="row">
                 <div class="col-12">
@@ -58,7 +49,7 @@
                 </div>
             </div>
             @endif
-        </div>
+        
     </div>
 
     <!-- /login form -->

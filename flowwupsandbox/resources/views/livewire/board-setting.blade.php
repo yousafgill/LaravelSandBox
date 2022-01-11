@@ -25,7 +25,7 @@
                 <!-- <li class="nav-item"><a href="#tab-tags" class="nav-link" data-toggle="tab"><i class="icon-price-tags mr-2"></i> Tags</a></li> -->
                 <!-- <li class="nav-item"><a href="#tab-integrations" class="nav-link" data-toggle="tab"><i class="icon-share4 mr-2"></i> Integrations</a></li> -->
                 <!-- <li class="nav-item"><a href="#tab-permissions" class="nav-link" data-toggle="tab"><i class="icon-user-lock mr-2"></i> Access & Permissions</a></li> -->
-                
+
             </ul>
 
             <div class="tab-content tab-content-full">
@@ -41,8 +41,13 @@
                                     </div>
                                     <div class="form-group">
                                         <x-jet-label for="slug" class="control-label" value="{{ __('URL') }}" />
-                                        <x-jet-input name="slug" id="slug" value="" type="text" class="form-control" wire:model.lazy="slug" autofocus />
-                                        <x-jet-label for="slug" class="mt-2" />
+                                        <div class="input-group">
+                                            <span class="input-group-prepend">
+                                                <span class="input-group-text">{{$teamurl}}</span>
+                                            </span>
+                                            <x-jet-input name="slug" id="slug" value="" type="text" class="form-control" wire:model.lazy="slug" autofocus />
+                                        </div>
+
                                     </div>
                                     <div class="form-group">
                                         <x-jet-label for="accessType" class="control-label" value="{{ __('Visibility') }}" />
@@ -54,7 +59,7 @@
                                     </div>
 
                                     <div class="form-group text-right">
-                                        <button type="button" wire:click.prevent="$emit('DeleteBoard')" class="btn btn-danger">Delete</button>
+                                        <button type="button" wire:click.prevent="$emit('DeleteBoard')" class="btn btn-danger">Archive</button>
                                         <a href="{{url('/dashboard/boards')}}" class="btn btn-secondary mr-2">Close</a>
                                         <button type="submit" class="btn btn-primary">Submit</button>
                                     </div>

@@ -88,14 +88,29 @@ class ShowPublicBoard extends Component
 
     
     public function mount($id){
-        $this->board=Board::where('slug','=',$id)->first();
-        $this->boardname=$this->board->title;
-        $this->boardfilter=$this->board->id;
-        $this->statusarray=status::all()->pluck('id')->toArray();
-        $this->statuslist=status::all();
+      $this->LoadBoards($id);
        
     }
 
+    public function LoadBoards($id){
+        if(\Auth::check()){
+            $this->board=Board::where('slug','=',$id)
+                    ->first() ? : abort(404);
+            $this->boardname=$this->board->title;
+            $this->boardfilter=$this->board->id;
+            $this->statusarray=status::all()->pluck('id')->toArray();
+            $this->statuslist=status::all();
+        }else{
+            $this->board=Board::where('slug','=',$id)
+                        ->where('boards.access_type','=','Public')
+                        ->first() ? : abort(404);
+            $this->boardname=$this->board->title;
+            $this->boardfilter=$this->board->id;
+            $this->statusarray=status::all()->pluck('id')->toArray();
+            $this->statuslist=status::all();
+        }
+        
+    }
     public function Loadposts(){
         $this->boardposts=\DB::table('posts')
         ->where('posts.board_id','=',$this->boardfilter)

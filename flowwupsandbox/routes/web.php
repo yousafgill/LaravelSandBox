@@ -14,7 +14,6 @@ use Illuminate\Support\Facades\Auth;
 */
 
 
-
 Route::get('/', function () {
     if(Auth::check()){
         if(Auth::user()->current_team_id==null)
@@ -24,10 +23,25 @@ Route::get('/', function () {
         }
     }else{
         // return view('welcome');
-        return redirect()->route('login');
+        return redirect()->route('roadmap.public');
     }
 });
 
+
+
+Route::get('/loginemail','App\Http\Controllers\UserMailController@create')->name('loginemail');
+Route::get('/login/password','App\Http\Controllers\UserMailController@loginpassword')->name('login.password');
+
+Route::get('/loginemail/notfound','App\Http\Controllers\UserMailController@notfound')->name('loginemail.notfound');
+Route::post('/loginemail/continue','App\Http\Controllers\UserMailController@store')->name('loginemail.store');
+
+Route::post('/publiclogin/continue','App\Http\Controllers\PublicLoginController@store')->name('publiclogin.store');
+
+Route::post('/user/register','App\Http\Controllers\UserRegistrationController@store')->name('userregistration.store');
+
+// Route::get('/loginemail',function(){
+//     return view('auth.loginemail');
+// });
 // Route::middleware(['auth:sanctum', 'verified'])->get('/', function () {
 //     if(Auth::user()->current_team_id==null)
 //         {return redirect()->route('roadmap.public');}
@@ -131,6 +145,10 @@ Route::get('/boards/{id}', ShowPublicBoard::class)->name('showboard.public');
 
 use App\Http\Livewire\ShowPublicPost;
 Route::get('/posts/{id}', ShowPublicPost::class)->name('showpost.public');
+
+use App\Http\Livewire\ChangePasswordPublic;
+Route::middleware(['auth:sanctum', 'verified'])->get('/my/changepassword', ChangePasswordPublic::class)->name('publicuser.changepassword');
+
 
 Route::get('storage/profile-photos/{image}', function($image = null)
 {

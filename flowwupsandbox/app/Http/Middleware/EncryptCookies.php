@@ -13,5 +13,8 @@ class EncryptCookies extends Middleware
      */
     protected $except = [
         //
+        'shared_flowwup_session',
+        'login_attempt',
+        'email'
     ];
 }

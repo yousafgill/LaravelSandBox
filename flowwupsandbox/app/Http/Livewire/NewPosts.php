@@ -11,7 +11,7 @@ class NewPosts extends Component
     public $posts;
     public $sessionteamid;
     public $sessionteamslug;
-
+    public $newcomments;
     public $listeners=['NewPostsUpVotedHandler'=>'NewPostsUpVotedHandler'];
 
 
@@ -64,6 +64,7 @@ class NewPosts extends Component
         $this->newposts=\DB::table('posts')
         ->where('posts.deleted_at','=',null)
         ->where('boards.team_id','=',$this->sessionteamid)
+        ->where('posts.is_new','=',1)
         ->join('statuses','posts.status_id','=','statuses.id')
         ->join('boards','posts.board_id','=','boards.id')
         ->join(\DB::raw('(select post_id,sum(upvote) as totalvotes from  voters group by post_id) as v'),'v.post_id','=','posts.id')
@@ -76,6 +77,35 @@ class NewPosts extends Component
         ->latest()
         ->take(3)
         ->get();
+
+    }
+
+    /**
+     * This method loads new posts and make available for the list
+     *
+     * @return void
+     */
+    private function LoadNewComments(){
+        $this->newcomments=\DB::table('comments')
+        ->where('comments.deleted_at','=',null)
+        ->where('boards.team_id','=',$this->sessionteamid)
+        ->where('comments.is_new','=',1)
+        ->join('posts','posts.id','=','comments.post_id')
+        ->join('boards','posts.board_id','=','boards.id')
+        ->join(\DB::raw('(select post_id,sum(upvote) as totalvotes from  voters group by post_id) as v'),'v.post_id','=','posts.id')
+        ->leftjoin(\DB::raw('(select post_id,sum(is_new) as totalcomments from comments group by post_id) c'),'c.post_id','=','posts.id')
+        ->join('statuses','posts.status_id','=','statuses.id')
+        ->select('comments.*',
+                'statuses.title as status_title',
+                'posts.title as post_title',
+                'boards.name as boardname','v.totalvotes',
+                'statuses.status_color',
+                \DB::raw('IFNULL(c.totalcomments,0) as totalcomments')
+                )
+        ->latest()
+        ->take(3)
+        ->get();
+        
     }
 
     /**
@@ -86,6 +116,7 @@ class NewPosts extends Component
     public function render()
     {
         $this->LoadNewposts();
+        $this->LoadNewComments();
         return view('livewire.new-posts');
     }
 }

@@ -1,6 +1,7 @@
 <x-guest-layout>
-    <x-jet-validation-errors class="mb-4" />
-    <form class="login-form" method="POST" action="{{ route('register') }}" x-data="{...init(), ...initV2()}">
+    
+    <!-- <form class="login-form" method="POST" action="{{ route('register') }}" x-data="{...init(), ...initV2()}"> -->
+    <form class="login-form" method="POST" action="{{ route('userregistration.store') }}" x-data="{...init(), ...initV2()}">
         @csrf
         <div class="card mb-0" style="min-width:350px;">
             <div class="card-body">
@@ -9,7 +10,7 @@
                     <h5 class="mb-0">Start your Free Trial</h5>
                     <span class="d-block text-muted">Free 30-day flowwup trial. No credit card required</span>
                 </div>
-
+                <x-jet-validation-errors class="mb-4" />
                 <div class="form-group form-group-feedback form-group-feedback-left">
                     <input id="name" class="form-control" type="text" name="name" required autofocus autocomplete="name" placeholder="full name" />
                     <div class="form-control-feedback">
@@ -19,12 +20,12 @@
 
                 <div class="form-group form-group-feedback form-group-feedback-left">
                     @if (app('request')->input('email'))
-                    <input id="email" class="form-control" type="text" name="email" value="{{  app('request')->input('email') }}" required autofocus autocomplete="email" readonly="readonly" placeholder="email" />
+                    <input id="email" class="form-control" type="email" name="email" value="{{  app('request')->input('email') }}" required autofocus autocomplete="email" readonly="readonly" placeholder="email" />
                     <div class="form-control-feedback">
                         <i class="icon-mention text-muted"></i>
                     </div>
                     @else
-                    <input id="email" class="form-control" type="text" name="email" required autofocus autocomplete="email" placeholder="email" />
+                    <input id="email" class="form-control" type="email" name="email" required autofocus autocomplete="email" placeholder="email" />
                     <div class="form-control-feedback">
                         <i class="icon-mention text-muted"></i>
                     </div>

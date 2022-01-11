@@ -66,9 +66,9 @@
                     Your Trial Period will end in {{auth()->user()->free_trial_days_left}} days
                 </a>
                 @elseif(auth()->user()->plan_mode =='Subscription')
-                <a href="#" class="navbar-nav-link bg-success">
+                <!-- <a href="#" class="navbar-nav-link bg-success">
                     Your successfully subscribed till {{auth()->user()->plan_until->toFormattedDateString()}}
-                </a>
+                </a> -->
                 @elseif(auth()->user()->plan_mode =='Cancelled')
                 <a href="#" class="navbar-nav-link bg-warning">
                     You have cancelled your plan, your plan will end till  {{auth()->user()->plan_until->toFormattedDateString()}}

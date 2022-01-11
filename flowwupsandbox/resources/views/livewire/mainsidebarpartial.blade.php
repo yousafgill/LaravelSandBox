@@ -1,4 +1,4 @@
-<div class="sidebar sidebar-light sidebar-main sidebar-expand-md">
+<div class="sidebar sidebar-light sidebar-main border-0 sidebar-shadow sidebar-expand-md">
     <!-- Sidebar mobile toggler -->
     <div class="sidebar-mobile-toggler text-center">
         <a href="#" class="sidebar-mobile-main-toggle">
@@ -23,7 +23,7 @@
                     <div class="media-body">
                         <div class="media-title font-weight-semibold">{{Auth::user()->name}}</div>
                         <div class="font-size-xs opacity-50">
-                            <i class="icon-pin font-size-sm"></i> &nbsp;Santa Ana, CA
+                            <!-- <i class="icon-pin font-size-sm"></i> &nbsp;Santa Ana, CA -->
                         </div>
                     </div>
 
@@ -62,9 +62,9 @@
                     <a href="#" class="nav-link"><i class="icon-gear"></i> <span>Settings</span></a>
                     <ul class="nav nav-group-sub" data-submenu-title="Settings" style="display: none;">
                         <li class="nav-item"><a href="{{ route('profile.show') }}" class="nav-link active"><i class="icon-user-lock"></i>Profile</a></li>
-                        <li class="nav-item"><a href="#" class="nav-link"><i class="icon-collaboration"></i>Team Settings</a></li>
-                        <li class="nav-item"><a href="#" class="nav-link"><i class="icon-user-plus"></i>Add Team Member</a></li>
-                        <li class="nav-item"><a href="#" class="nav-link"><i class="icon-credit-card"></i>Billing</a></li>
+                        <li class="nav-item"><a href="{{ route('teams.show', Auth::user()->currentTeam->id) }}" class="nav-link"><i class="icon-collaboration"></i>Team Settings</a></li>
+                        <!-- <li class="nav-item"><a href="#" class="nav-link"><i class="icon-user-plus"></i>Add Team Member</a></li> -->
+                        <li class="nav-item"><a href="{{ route('billing') }}" class="nav-link"><i class="icon-credit-card"></i>Billing</a></li>
                         <li class="nav-item-divider"></li>
                         <form method="POST" action="{{ route('logout') }}">
                             @csrf

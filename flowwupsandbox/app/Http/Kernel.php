@@ -24,6 +24,34 @@ class Kernel extends HttpKernel
     ];
 
     /**
+     * The priority-sorted list of middleware.
+     *
+     * Forces non-global middleware to always be in the given order.
+     *
+     * @var string[]
+     */
+    protected $middlewarePriority = [
+        \Illuminate\Cookie\Middleware\EncryptCookies::class,
+        \Illuminate\Session\Middleware\StartSession::class,
+        \Illuminate\View\Middleware\ShareErrorsFromSession::class,
+        \Illuminate\Contracts\Auth\Middleware\AuthenticatesRequests::class,
+        \Illuminate\Routing\Middleware\ThrottleRequests::class,
+        \Illuminate\Session\Middleware\AuthenticateSession::class,
+        \Illuminate\Routing\Middleware\SubstituteBindings::class,
+        \Illuminate\Auth\Middleware\Authorize::class,
+
+        \Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse::class,
+        \App\Http\Middleware\VerifyCsrfToken::class,
+        \App\Http\Middleware\EnsureValidUri::class,
+        \App\Http\Middleware\EnsureTenant::class,
+        // \App\Http\Middleware\EnforceLogin::class,
+        // \App\Http\Middleware\CheckTenant::class,
+        \App\Http\Middleware\EnsureTrialPeriod::class,
+
+    ];
+
+
+    /**
      * The application's route middleware groups.
      *
      * @var array
@@ -37,7 +65,11 @@ class Kernel extends HttpKernel
             \Illuminate\View\Middleware\ShareErrorsFromSession::class,
             \App\Http\Middleware\VerifyCsrfToken::class,
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
-            \App\Http\Middleware\CheckTenant::class,
+            \App\Http\Middleware\EnsureValidUri::class,
+            \App\Http\Middleware\EnsureTenant::class,
+            // \App\Http\Middleware\EnforceLogin::class,
+            // \App\Http\Middleware\CheckTenant::class,
+            \App\Http\Middleware\EnsureTrialPeriod::class,
         ],
 
         'api' => [

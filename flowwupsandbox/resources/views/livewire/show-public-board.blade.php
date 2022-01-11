@@ -3,8 +3,8 @@
     <div class="row">
         <div class="col-md-4 ">
             <!-- Horizontal form -->
-            <div class="card">
-                <div class="card-header bg-light header-elements-inline">
+            <div class="card card-custom-container">
+                <div class="card-header header-elements-inline">
                     <h5 class="card-title">Create Post</h5>
                     <div class="header-elements">
                         <div class="list-icons">
@@ -20,11 +20,11 @@
                         <fieldset>
                             <div class="form-group">
                                 <x-jet-label for="title" class="control-label" value="Title" />
-                                <x-jet-input name="title" id="title" type="text" class="form-control" wire:model="title" autofocus placeholder="Short, descriptive title" />
+                                <x-jet-input name="title" id="title" type="text" class="form-control" wire:model="title" required="required" autofocus placeholder="Short, descriptive title" />
                             </div>
                             <div class="form-group">
                                 <x-jet-label for="detail" class="control-label" value="Detail" />
-                                <textarea name="detail" id="detail" wire:model="detail" rows="4" class="form-control" autofocus placeholder="Tell us more about your feedback"></textarea>
+                                <textarea name="detail" id="detail" wire:model="detail" rows="4" class="form-control" required="required" autofocus placeholder="Tell us more about your feedback"></textarea>
                             </div>
                             <div class="form-group text-right">
                                 <button type="button" class="btn btn-secondary mr-2">Clear</button>
@@ -44,8 +44,8 @@
         <div class="col-md-8">
 
             <!-- Vertical form -->
-            <div class="card">
-                <div class="card-header bg-light header-elements-inline">
+            <div class="card card-custom-container">
+                <div class="card-header header-elements-inline">
 
                     <div class="card-title h6 btn-group">
                         <div class="form-group-feedback form-group-feedback-right">
@@ -75,50 +75,76 @@
                     </div>
                 </div>
 
-                <div class="card-body padding-0">
-                    <div class="row">
-                        @foreach($boardposts as $p)
-                        <div class="col-12">
-                            <div class="card border-left-3 border-left-{{$p->status_color}} rounded-left-0">
-                                <div class="card-body">
-                                    <div class="row">
-                                        <div class="col-1">
-                                            <div class="d-flex justify-content-center flex-column bg-light border rounded p-0">
-                                                @auth
-                                                <a href="#" class="text-center  text-secondary" wire:click.prevent="$emit('UpVoted',{{$p->id}})"><i class="icon-arrow-up5 icon-2x p-0"></i></a>
-                                                @else
-                                                <a href="#" class="text-center  text-secondary"  data-toggle="modal" data-target="#modal-tabbed" ><i class="icon-arrow-up5 icon-2x p-0"></i></a>
-                                                @endif
-                                                <div class="bg-light pt-0 pb-2 px-2 rounded text-center">
-                                                    {{$p->totalvotes}}
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-11">
-                                            <div class="d-sm-flex align-item-sm-center flex-sm-nowrap">
-                                                <div>
-                                                    <a href="{{route('showpost.public',$p->slug)}}" style="color:#333;">
-                                                        <h6 class="mb-0">{{$p->title}}</h6>
-                                                    </a>
-                                                    <p class="mb-0"><span class="text-{{$p->status_color}} font-weight-bold">{{$p->status_title}}</span></p>
-                                                    <p class="mb-0">{{\Illuminate\Support\Str::limit($p->detail, 80, $end='...')}}</p>
-                                                </div>
-                                                <ul class="list list-unstyled text-right mb-0 pt-3 mt-sm-0 ml-auto">
-                                                    <li><span class="align-right-"><i class="mi-comment pr-1"></i></span>{{$p->totalcomments}}</li>
-                                                </ul>
-                                            </div>
-                                        </div>
+
+            </div>
+            <!-- <div class="card-body padding-0"> -->
+            <div class="row">
+                @if(count($boardposts)<1) 
+                <div class="col-12">
+                    <div class="card-custom-empty rounded-3  mb-1">
+                        <div class="vertical-center">
+                            <div class="">
+                                <p>This board has no posts</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            @endif
+            @foreach($boardposts as $p)
+            <div class="col-12">
+                <div class="card card-custom rounded-3  mb-2">
+                    <div class="card-body p-0">
+                        <div class="row">
+                            <div class="col-2 alpha-slate pt-3" style="max-width:3rem; !important">
+                                <div class="d-flex justify-content-center flex-column p-0">
+                                    @auth
+                                    <a href="#" class="text-secondary  text-center" wire:click.prevent="$emit('RoadmapUpVotedHandler',{{$p->id}})"><i class="icon-arrow-up5 icon-1x p-0"></i></a>
+                                    @else
+                                    <a href="#" class="text-secondary  text-center" data-toggle="modal" data-target="#modal-tabbed"><i class="icon-arrow-up5 icon-1x p-0"></i></a>
+                                    @endif
+
+                                    <div class="pt-0 pb-2 px-1 rounded text-center">
+                                        {{$p->totalvotes}}
                                     </div>
                                 </div>
                             </div>
+                            <!-- <div class="col-1 bg-slate-300">
+                                        <div class="d-flex justify-content-center flex-column bg-light border rounded p-0">
+                                            @auth
+                                            <a href="#" class="text-center  text-secondary" wire:click.prevent="$emit('UpVoted',{{$p->id}})"><i class="icon-arrow-up5 icon-2x p-0"></i></a>
+                                            @else
+                                            <a href="#" class="text-center  text-secondary" data-toggle="modal" data-target="#modal-tabbed"><i class="icon-arrow-up5 icon-2x p-0"></i></a>
+                                            @endif
+                                            <div class="bg-light pt-0 pb-2 px-2 rounded text-center">
+                                                {{$p->totalvotes}}
+                                            </div>
+                                        </div>
+                                    </div> -->
+                            <div class="col-11 pt-2 pb-3">
+                                <div class="d-sm-flex align-item-sm-center flex-sm-nowrap">
+                                    <div>
+                                        <a href="{{route('showpost.public',$p->slug)}}" style="color:#333;">
+                                            <h6 class="mb-0">{{$p->title}}</h6>
+                                        </a>
+                                        <p class="mt-1 mb-2">{{\Illuminate\Support\Str::limit($p->detail, 80, $end='...')}}</p>
+                                        <p class="mb-0"><span class="text-{{$p->status_color}} font-weight-bold">{{$p->status_title}}</span></p>
+
+                                    </div>
+                                    <ul class="list list-unstyled text-right mb-0 pt-3 mt-sm-0 ml-auto">
+                                        <li><span class="align-right-"><i class="mi-comment pr-1"></i></span>{{$p->totalcomments}}</li>
+                                    </ul>
+                                </div>
+                            </div>
                         </div>
-                        @endforeach
                     </div>
                 </div>
             </div>
-            <!-- /vertical form -->
+            @endforeach
         </div>
-
+        <!-- </div> -->
+        <!-- /vertical form -->
     </div>
+
+</div>
 
 </div>

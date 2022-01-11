@@ -22,12 +22,15 @@ class BillingPlan extends Component
     public $sbtn='';
     public $gbtn='';
     public $bbtn='';
-
+    public $trialExpired=false;
     protected $listeners=['reactivateplan'];
 
     public function mount(){
         //
         $this->GetCurrentPlan();
+        if (auth()->check() && auth()->user()->plan_mode=="Trial" && auth()->user()->free_trial_days_left <= 0){
+            $this->trialExpired=true;
+        }
     }
 
 

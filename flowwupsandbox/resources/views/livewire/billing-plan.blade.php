@@ -10,7 +10,11 @@
         </h6>
         <span class="text-muted d-block">FLOWWUP uses Stripe for billing. You will be taken to Stripe's website to manage your subscription.</span>
     </div>
-
+    @if ($trialExpired)
+    <div class="alert alert-danger">
+        Your Free Trial is over. Please choose plan to continue.
+    </div>
+    @endif
     <div class="card-group mb-3">
         <div class="card">
             <div class="card-body text-center px-0">

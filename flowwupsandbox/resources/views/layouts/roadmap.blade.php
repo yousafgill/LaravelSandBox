@@ -110,18 +110,18 @@
                                     <h5 class="mb-0">Login to your account</h5>
                                     <span class="d-block text-muted">Your credentials</span>
                                 </div>
-                                <form method="POST" action="{{ route('login') }}">
+                                <form method="POST" action="{{ route('publiclogin.store') }}">
                                     @csrf
-                                    
+
                                     <div class="form-group form-group-feedback form-group-feedback-left">
-                                        <input type="text" class="form-control" id="email" name="email" placeholder="Email">
+                                        <input type="email" class="form-control" id="email" name="email" required placeholder="Email">
                                         <div class="form-control-feedback">
                                             <i class="icon-mention text-muted"></i>
                                         </div>
                                     </div>
 
                                     <div class="form-group form-group-feedback form-group-feedback-left">
-                                        <input type="password" id="password" name="password" class="form-control" placeholder="Password">
+                                        <input type="password" id="password" name="password" class="form-control" required placeholder="Password">
                                         <div class="form-control-feedback">
                                             <i class="icon-lock2 text-muted"></i>
                                         </div>
@@ -135,6 +135,12 @@
                                         <button type="submit" class="btn btn-primary btn-block">Sign in</button>
                                     </div>
                                 </form>
+                                <div class="form-group text-center text-muted content-divider">
+                                    <span class="px-2">or sign in with</span>
+                                </div>
+                                <!-- <div class="form-group"> -->
+                                <a href="#" class="btn btn-danger btn-block" data-toggle="tab"><i class="icon icon-google "></i> Google</a>
+                                <!-- </div> -->
 
                             </div>
                             <!--/Login -->
@@ -146,30 +152,31 @@
                                     <h5 class="mb-0">Create account</h5>
                                     <span class="d-block text-muted">All fields are required</span>
                                 </div>
-                                <form method="POST" action="{{ route('register') }}">
+                                <!-- <form method="POST" action="{{ route('register') }}"> -->
+                                <form method="POST" action="{{ route('userregistration.store') }}">
                                     @csrf
                                     <div class="form-group form-group-feedback form-group-feedback-left">
-                                        <input type="text" class="form-control" id="name" name="name" placeholder="Name">
+                                        <input type="text" class="form-control" id="name" name="name" required placeholder="Name">
                                         <div class="form-control-feedback">
                                             <i class="icon-mention text-muted"></i>
                                         </div>
                                     </div>
                                     <div class="form-group form-group-feedback form-group-feedback-left">
-                                        <input type="email" id="email" name="email" class="form-control" placeholder="Email">
+                                        <input type="email" id="email" name="email" class="form-control" required placeholder="Email">
                                         <div class="form-control-feedback">
                                             <i class="icon-mention text-muted"></i>
                                         </div>
                                     </div>
 
                                     <div class="form-group form-group-feedback form-group-feedback-left">
-                                        <input type="password" id="password" name="password" class="form-control" placeholder="Your password">
+                                        <input type="password" id="password" name="password" class="form-control" required placeholder="Your password">
                                         <div class="form-control-feedback">
                                             <i class="icon-user-lock text-muted"></i>
                                         </div>
                                     </div>
 
                                     <div class="form-group form-group-feedback form-group-feedback-left">
-                                        <input type="password" class="form-control" id="password_confirmation" name="password_confirmation" placeholder="Confirm password">
+                                        <input type="password" class="form-control" id="password_confirmation" required name="password_confirmation" placeholder="Confirm password">
                                         <div class="form-control-feedback">
                                             <i class="icon-user-lock text-muted"></i>
                                         </div>

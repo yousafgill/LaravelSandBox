@@ -37,14 +37,27 @@ class RoadmapSecondnavPartial extends Component
 
 
     private function LoadBoards(){
-        $this->boards=\DB::table('boards')
-        ->where('boards.deleted_at','=',null)
-        ->where('boards.team_id','=',$this->sessionteamid)
-        ->leftjoin(\DB::raw('(select board_id,count(id) as totalposts from posts group by board_id) p'),'boards.id','=','p.board_id')
-        ->select('boards.*',
-                \DB::raw('IFNULL(p.totalposts,0) as totalposts')
-                )
-        ->get();
+        if(\Auth::check()){
+            $this->boards=\DB::table('boards')
+            ->where('boards.deleted_at','=',null)
+            ->where('boards.team_id','=',$this->sessionteamid)
+            ->leftjoin(\DB::raw('(select board_id,count(id) as totalposts from posts group by board_id) p'),'boards.id','=','p.board_id')
+            ->select('boards.*',
+                    \DB::raw('IFNULL(p.totalposts,0) as totalposts')
+                    )
+            ->get();
+        }else{
+            $this->boards=\DB::table('boards')
+            ->where('boards.deleted_at','=',null)
+            ->where('boards.access_type','=','Public')
+            ->where('boards.team_id','=',$this->sessionteamid)
+            ->leftjoin(\DB::raw('(select board_id,count(id) as totalposts from posts group by board_id) p'),'boards.id','=','p.board_id')
+            ->select('boards.*',
+                    \DB::raw('IFNULL(p.totalposts,0) as totalposts')
+                    )
+            ->get();
+        }
+       
     }
     public function render()
     {

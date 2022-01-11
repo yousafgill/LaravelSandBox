@@ -10,9 +10,11 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Laravel\Fortify\Contracts\CreatesNewUsers;
 use Laravel\Jetstream\Events\TeamMemberAdded;
-use Illuminate\Http\Request;
-use Illuminate\Http\Response;
-use Illuminate\Http\RedirectResponse;
+// use Illuminate\Http\Request;
+// use Illuminate\Http\Response;
+// use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Notification;
+use App\Notifications\WelcomeEmailNotification;
 use Carbon\Carbon;
 
 class CreateNewUser implements CreatesNewUsers
@@ -30,7 +32,18 @@ class CreateNewUser implements CreatesNewUsers
     public function create(array $input)
     {
         //dd($input);
-
+        $usrdomain='';
+        $d=explode('.', request()->getHost(), 2);
+        $sd='';
+        if(sizeof($d)==2){
+            $sd=$d[0];
+        }
+        // dd($sd);
+        if(isset($input['team_slug'])){
+            $usrdomain = "http://".$input['team_slug'] . "." . \config('app.appdomain');    
+        }else{
+            $usrdomain = "http://".$sd . "." . \config('app.appdomain');    
+        }
         Validator::make($input, [
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
@@ -80,7 +93,40 @@ class CreateNewUser implements CreatesNewUsers
             });
            
         });
-        return $NewUser;
+
+        $link1='1 : '.'<a href='. $usrdomain .'/dashboard/boards'.'> Click Here </a> to create your first feedback board' ;
+        $data='';
+        
+
+        if(isset($input['team_slug'])){
+            $data=[
+                'logintype' =>'company',
+                'name' => $NewUser->name,
+                'domain' =>  $usrdomain."/login",
+                'boardsurl' => $usrdomain .'/dashboard/boards',
+                // 'boardsurl' =>  $link1,
+                'createboard' => $usrdomain .'/dashboard/createboard',
+                'roadmapurl' => $usrdomain .'/roadmap',
+                'inviteurl' => $usrdomain .'/teams'."/".$NewUser->current_team_id
+                    ];
+        }else{
+            $data=[
+                'logintype' =>'public',
+                'name' => $NewUser->name,
+                'domain' =>  $usrdomain."/login",
+                'boardsurl' => $usrdomain .'/dashboard/boards',
+                // 'boardsurl' =>  $link1,
+                'createboard' => $usrdomain .'/dashboard/createboard',
+                'roadmapurl' => $usrdomain .'/roadmap',
+                'inviteurl' => $usrdomain .'/teams'."/".$NewUser->current_team_id
+                    ];
+        }
+        $NewUser->notify(new WelcomeEmailNotification($data));   
+        // Notification::send($NewUser,)
+       
+     
+        // return $NewUser;
+        return \redirect()->route('dashboard');
        
     }
 
@@ -130,6 +176,8 @@ class CreateNewUser implements CreatesNewUsers
     }
 
     public function redirectuser($domain){
-        return redirect('/dashboard');
+       
+        // return redirect('/dashboard');
+        return redirect('/roadmap');
     }
 }

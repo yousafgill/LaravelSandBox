@@ -57,6 +57,7 @@ class PostDetail extends Component
     }
 
     public function SetSessionTeamId(){
+       
         if(session('tenant') !=null){
             $this->sessionteamslug=session('tenant')->team_slug ;
             $tm=Team::where('team_slug','=',$this->sessionteamslug)->first() ? : abort(404);
@@ -164,6 +165,15 @@ class PostDetail extends Component
      * @return void
      */
     public function handlepostselected($postid){
+        
+        Post::find($postid)->update([
+            'is_new' => 0
+        ]);
+
+        Comment::where('post_id',$postid)->update([
+            'is_new' => 0
+        ]);
+
         $this->SelectedPost=Post::where('id',$postid)->first();
         $this->estimated=$this->SelectedPost->estimated;
 

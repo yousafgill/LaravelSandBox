@@ -103,19 +103,19 @@
                                     </div>
                                     <p>{{$cmt->message}}</p>
                                     <ul class="list-inline list-inline-dotted font-size-sm">
-                                        <li class="list-inline-item"> {{$cmt->ranking}} <a href="#"><i class="icon-arrow-up22 text-success"></i></a><a href="#"><i class="icon-arrow-down22 text-danger"></i></a></li>
+                                        <!-- <li class="list-inline-item"> {{$cmt->ranking}} <a href="#"><i class="icon-arrow-up22 text-success"></i></a><a href="#"><i class="icon-arrow-down22 text-danger"></i></a></li> -->
                                         @auth
                                         <li class="list-inline-item"><a href="#" @click.prevent="open = true">Reply</a></li>
                                         @else
                                         <li class="list-inline-item"><a href="#"  data-toggle="modal" data-target="#modal-tabbed" >Reply</a></li>
                                         @endif
-                                        <li class="list-inline-item"><a href="#">Edit</a></li>
+                                        <!-- <li class="list-inline-item"><a href="#">Edit</a></li> -->
                                     </ul>
                                     <!--BEGIN: Comment Reply-to-reply Inline Editor -->
                                     <div class="card-body" x-show="open" @click.away="open = false">
                                         <form wire:submit.prevent="PostPublicCommentReply({{$cmt->id}})">
                                             <div class="mb-3">
-                                                <textarea name="commentreply" id="commentreply" wire:model="commentreply" class="form-control" rows="2"></textarea>
+                                                <textarea name="commentreply" id="commentreply" required wire:model="commentreply" class="form-control" rows="2"></textarea>
                                             </div>
                                             <div class="text-right">
                                                 @auth
@@ -151,19 +151,19 @@
                                             </div>
                                             <p>{{$cmt->message}}</p>
                                             <ul class="list-inline list-inline-dotted font-size-sm">
-                                                <li class="list-inline-item">{{$cmt->ranking}} <a href="#"><i class="icon-arrow-up22 text-success"></i></a><a href="#"><i class="icon-arrow-down22 text-danger"></i></a></li>
+                                                <!-- <li class="list-inline-item">{{$cmt->ranking}} <a href="#"><i class="icon-arrow-up22 text-success"></i></a><a href="#"><i class="icon-arrow-down22 text-danger"></i></a></li> -->
                                                 @auth
                                                 <li class="list-inline-item"><a href="#" @click.prevent="open = true">Reply</a></li>
                                                 @else
                                                 <li class="list-inline-item"><a href="#"   data-toggle="modal" data-target="#modal-tabbed"  >Reply</a></li>
                                                 @endif
-                                                <li class="list-inline-item"><a href="#">Edit</a></li>
+                                                <!-- <li class="list-inline-item"><a href="#">Edit</a></li> -->
                                             </ul>
                                             <!--BEGIN: Comment Reply-to-reply Inline Editor -->
                                             <div class="card-body bg-light" x-show="open" @click.away="open = false">
                                                 <form wire:submit.prevent="PostPublicCommentReply({{$cmt->reply_to}})">
                                                     <div class="mb-1">
-                                                        <textarea name="commentreply" id="commentreply" wire:model="commentreply" class="form-control" rows="2"></textarea>
+                                                        <textarea name="commentreply" id="commentreply" required wire:model="commentreply" class="form-control" rows="2"></textarea>
                                                     </div>
                                                     <div class="text-right">
                                                         @auth
@@ -198,7 +198,7 @@
                 <form wire:submit.prevent="PostPublicComment">
                     <h6 class="mb-3">Add comment</h6>
                     <div class="mb-3">
-                        <textarea name="message" id="message" wire:model="message" class="form-control" rows="5"></textarea>
+                        <textarea name="message" id="message" required wire:model="message" class="form-control" rows="5"></textarea>
                     </div>
 
                     <div class="text-right">

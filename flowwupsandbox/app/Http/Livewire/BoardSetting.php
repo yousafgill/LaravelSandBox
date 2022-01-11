@@ -5,6 +5,7 @@ namespace App\Http\Livewire;
 use Livewire\Component;
 use App\Models\Board;
 use App\Models\User;
+use App\Models\Team;
 use Illuminate\Support\Facades\Auth;
 
 class BoardSetting extends Component
@@ -14,6 +15,7 @@ class BoardSetting extends Component
     public $slug="";
     public $accessType="";
     public $success="";
+    public $teamurl="";
 
     public $listeners=[
                         'DeleteBoard'=>'DeleteBoard',
@@ -30,6 +32,11 @@ class BoardSetting extends Component
 
     public function mount($id){
         $this->LoadSelectedBoard($id);
+        $teamid=Auth::user()->current_team_id;
+        $team=Team::find($teamid);
+        
+        $this->teamurl='http://'.$team->team_slug.'.'. \config('app.appdomain').'/boards/';
+
       
     }
     protected $rules = [

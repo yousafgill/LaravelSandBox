@@ -14,7 +14,7 @@
     </div>
     <div class="card-body pt-0 pr-0 pb-0  ">
         <div class="row">
-            <div class="col-9 mt-3">
+            <div class="col-md-8 col-lg-8 col-xl-9 mt-3">
                 <ul class="media-list">
                     <!-- BEGIN: Top Level Post -->
                     <li class="media flex-column flex-md-row ">
@@ -79,7 +79,7 @@
                             </div>
                             <p>{{$cmt->message}}</p>
                             <ul class="list-inline list-inline-dotted font-size-sm">
-                                <li class="list-inline-item"> {{$cmt->ranking}} <a href="#"><i class="icon-arrow-up22 text-success"></i></a><a href="#"><i class="icon-arrow-down22 text-danger"></i></a></li>
+                                <!-- <li class="list-inline-item"> {{$cmt->ranking}} <a href="#"><i class="icon-arrow-up22 text-success"></i></a><a href="#"><i class="icon-arrow-down22 text-danger"></i></a></li> -->
                                 <li class="list-inline-item"><a href="#" @click.prevent="open = true">Reply</a></li>
                                 <li class="list-inline-item"><a href="#">Edit</a></li>
                             </ul>
@@ -119,7 +119,7 @@
                                     </div>
                                     <p>{{$cmt->message}}</p>
                                     <ul class="list-inline list-inline-dotted font-size-sm">
-                                        <li class="list-inline-item">{{$cmt->ranking}} <a href="#"><i class="icon-arrow-up22 text-success"></i></a><a href="#"><i class="icon-arrow-down22 text-danger"></i></a></li>
+                                        <!-- <li class="list-inline-item">{{$cmt->ranking}} <a href="#"><i class="icon-arrow-up22 text-success"></i></a><a href="#"><i class="icon-arrow-down22 text-danger"></i></a></li> -->
                                         <li class="list-inline-item"><a href="#" @click.prevent="open = true">Reply</a></li>
                                         <li class="list-inline-item"><a href="#">Edit</a></li>
                                     </ul>
@@ -148,7 +148,7 @@
                 </ul>
 
             </div>
-            <div class="col-3 border-left-1 border-light-grey">
+            <div class="col-md-4 col-lg-4 col-xl-3 border-left-1 border-light-grey">
                 <div class="card-body">
                     @if(isset($boards))
                     <div class="form-group">

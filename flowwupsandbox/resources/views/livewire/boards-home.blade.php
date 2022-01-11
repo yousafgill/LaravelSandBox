@@ -42,13 +42,18 @@
                     </td>
                     <td>
                         {{$b->totalposts}}
-                        <br />
-                        <a href="#">{{$b->newposts}} new posts </a>
+                        
+                        @if($b->newposts>0)
+                            <br />
+                            <a href="{{ route('dashboard.posts', $b->id ) }}">{{$b->newposts}} new posts </a>
+                        @endif
                     </td>
                     <td>
                         {{$b->totalcomments}}
-                        <br />
-                        <a href="#">{{$b->newcomments}} new comments </a>
+                        @if($b->newcomments)
+                            <br />
+                            <a href="{{ route('dashboard.posts', $b->id ) }}">{{$b->newcomments}} new comments </a>
+                        @endif
                     </td>
                     <td>
                         {{$b->totalvotes}}
@@ -58,7 +63,7 @@
                     </td>
                     @if($b->deleted_at!=null)
                     <td class="text-right">
-                        <a href="{{ route('dashboard.boardsetting', $b->id ) }}" class="btn btn-success">Restore</a>
+                        <a href="#" wire:click.prevent="$emit('restoreBoard',{{$b->id}})" class="btn btn-success">Restore</a>
                     </td>
                     @else
                     <td class="text-right">

@@ -1,7 +1,9 @@
 .secondary-sidebar {
-        width: 22rem !important; 
+        width: 18rem !important; 
     }
-
+.sidebar-left-mid{
+    width: 15rem !important;
+}
 .hidden{
     display: none !important;
 }
@@ -44,6 +46,105 @@ a:hover {
     min-height: 80vh !important;
 }
 
+.card-custom-empty {
+    border: 4px dashed #dedede !important;
+    min-height: 100px !important;
+    border-radius: 0.3rem;
+    overflow: hidden;
+    position: relative;
+
+}
+.vertical-center {
+    margin: 0;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+  }
+
+.card-custom-empty-large {
+    border: 4px dashed #dedede !important;
+    min-height: 250px !important;
+    border-radius: 0.3rem;
+    overflow: hidden;
+}
+.card-custom-container {
+    border:0 !important;
+    /* margin-bottom: 1.25rem; */
+    border-radius: 0.3rem;
+    overflow: show;
+    /* box-shadow: 2px 2px 3px 1px rgb(76 76 76 / 51%) !important; */
+    box-shadow: 1px 1px 3px 1px rgb(209, 209, 209) !important;
+}
+.card-custom {
+    border:0 !important;
+    /* margin-bottom: 1.25rem; */
+    border-radius: 0.3rem;
+    overflow: hidden;
+    /* box-shadow: 2px 2px 3px 1px rgb(76 76 76 / 51%) !important; */
+    box-shadow: 1px 1px 3px 1px rgb(209, 209, 209) !important;
+}
+.post-card-custom {
+    /* border:0 !important; */
+    /* margin-bottom: 1.25rem; */
+    border-left-width: 4px !important;
+    border-left-style: solid !important;
+    border-top: 0 !important;
+    border-right: 0 !important;
+    border-bottom: 0 !important;
+    border-radius: 0rem 0.3rem 0.3rem 0rem;
+    overflow: hidden;
+    /* box-shadow: 2px 2px 3px 1px rgb(76 76 76 / 51%) !important; */
+    box-shadow: 1px 1px 3px 1px rgb(209, 209, 209) !important;
+}
+
+.custom-scrollbars {
+    overflow-y: scroll !important;
+    -ms-overflow-style: -ms-autohiding-scrollbar !important;
+    scrollbar-width: thin !important;
+    scrollbar-color: #999 #eee;
+}
+
+.post-card-custom:hover{
+    background-color: #f6f6f6;
+    /* cursor: pointer !important; */
+    box-shadow: 1px 3px 5px 1px rgb(209, 209, 209) !important;
+    transition: transform 550ms linear;
+    /* transform: translateY(-2px); */
+    transform: translateX(-4px);
+
+}
+.card-custom:hover{
+    background-color: #f6f6f6;
+    /* cursor: pointer !important; */
+    box-shadow: 1px 3px 5px 1px rgb(209, 209, 209) !important;
+    transition: transform 550ms linear;
+    transform: translateY(-2px);
+    /* transform: translateX(-4px); */
+}
+
+.sidebar-shadow{
+    box-shadow: 2px 2px 3px 1px #ddd !important;
+}
+
+
+/* Scrollbar Styling */
+::-webkit-scrollbar {
+    width: 5px;
+}
+ 
+::-webkit-scrollbar-track {
+    background-color: #ffffff;
+    -webkit-border-radius: 10px;
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+    -webkit-border-radius: 10px;
+    border-radius: 10px;
+    background: #bbbbbb; 
+}
 
 /* ------------------------------------------------------------------------------
  *

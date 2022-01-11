@@ -11,6 +11,15 @@ class BoardsHome extends Component
     public $sessionteamid;
     public $sessionteamslug;
 
+
+    public $listeners=['restoreBoard'];
+
+    public function restoreBoard($id){
+        // dd($id);
+        Board::withTrashed()->find($id)->restore();
+        return redirect('/dashboard/boards');
+    }
+
     public function mount(){
         $this->SetSessionTeamId();
     }
@@ -29,11 +38,11 @@ class BoardsHome extends Component
 
     public function render()
     {
-
+        $this->SetSessionTeamId();
         $this->boards=\DB::table('boards')
         // ->where('boards.deleted_at','=',null)
         ->where('boards.team_id','=',$this->sessionteamid)
-        ->leftjoin(\DB::raw('(select p.board_id,count(p.id) as totalposts,sum(p.is_new) as newposts,count(c.id) as totalcomments,count(c.is_new) as newcomments,sum(v.upvote) as totalvotes from posts p INNER JOIN voters v on v.post_id=p.id LEFT JOIN comments c on c.post_id = p.id group by p.board_id) p'),'boards.id','=','p.board_id')
+        ->leftjoin(\DB::raw('(select p.board_id,count(p.id) as totalposts,sum(p.is_new) as newposts,count(c.id) as totalcomments,sum(c.is_new) as newcomments,sum(v.upvote) as totalvotes from posts p INNER JOIN voters v on v.post_id=p.id LEFT JOIN comments c on c.post_id = p.id group by p.board_id) p'),'boards.id','=','p.board_id')
         ->select('boards.id','boards.name as boardname','boards.deleted_at','boards.slug','access_type',
                 \DB::raw('IFNULL(p.totalposts,0) as totalposts'),
                 \DB::raw('IFNULL(p.newposts,0) as newposts'),

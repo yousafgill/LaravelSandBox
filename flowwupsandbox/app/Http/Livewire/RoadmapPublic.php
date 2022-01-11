@@ -105,17 +105,33 @@ class RoadmapPublic extends Component
         ->get();
     }
     private function LoadBoards(){
-        $this->boards=\DB::table('boards')
-        ->where('boards.deleted_at','=',null)
-        ->where('boards.team_id','=',$this->sessionteamid)
-        ->leftjoin(\DB::raw('(select board_id,count(id) as totalposts from posts group by board_id) p'),'boards.id','=','p.board_id')
-        ->select('boards.*',
-                \DB::raw('IFNULL(p.totalposts,0) as totalposts')
-                )
-        ->orderby('totalposts','desc')
-        ->take(3)
-        ->get();
+        if(\Auth::check()){
+            $this->boards=\DB::table('boards')
+            ->where('boards.deleted_at','=',null)
+            ->where('boards.team_id','=',$this->sessionteamid)
+            ->leftjoin(\DB::raw('(select board_id,count(id) as totalposts from posts group by board_id) p'),'boards.id','=','p.board_id')
+            ->select('boards.*',
+                    \DB::raw('IFNULL(p.totalposts,0) as totalposts')
+                    )
+            ->orderby('totalposts','desc')
+            ->take(3)
+            ->get();
+        }else{
+            $this->boards=\DB::table('boards')
+            ->where('boards.deleted_at','=',null)
+            ->where('boards.access_type','=','Public')
+            ->where('boards.team_id','=',$this->sessionteamid)
+            ->leftjoin(\DB::raw('(select board_id,count(id) as totalposts from posts group by board_id) p'),'boards.id','=','p.board_id')
+            ->select('boards.*',
+                    \DB::raw('IFNULL(p.totalposts,0) as totalposts')
+                    )
+            ->orderby('totalposts','desc')
+            ->take(3)
+            ->get();
+        }
+       
     }
+   
 
     public function RoadmapUpVotedHandler($id){
         $usrid=Auth()->id();
@@ -135,7 +151,7 @@ class RoadmapPublic extends Component
 
     public function render()
     {
-        $this->LoadBoards();
+        $this->LoadBoards();                    
         $this->LoadPlannedPosts();
         $this->LoadInprogressPosts();
         $this->LoadCompletePosts();

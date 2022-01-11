@@ -1,4 +1,4 @@
-<div class="sidebar sidebar-light sidebar-main sidebar-expand-md">
+<div class="sidebar sidebar-light sidebar-left-mid sidebar-main border-0 sidebar-shadow sidebar-expand-md">
     <!-- Sidebar mobile toggler -->
     <div class="sidebar-mobile-toggler text-center">
         <a href="#" class="sidebar-mobile-main-toggle">
@@ -26,16 +26,12 @@
             <div class="card-body">
                 <form action="#">
                     <div class="form-group">
-                        <select name="" id="" class="form-control" wire:change.prevent="$emit('DateChanged',$event.target.value)">
-                            <option value="all">All Time</option>
+                        <select name="" id="" class="form-control" wire:model="dateperiod" wire:change.prevent="$emit('DateChanged',$event.target.value)">
+                            <option value="all">All time</option>
                             <option value="today">Today</option>
-                            <option value="yesterday">Yesterday</option>
-                            <option value="lasttwodays">Last Two Days</option>
-                            <option value="thisweek">This Week</option>
-                            <option value="lastweek">Last Week</option>
-                            <option value="lasttwoweek">Last Two Week</option>
-                            <option value="lastthreeweek">Last Three Week</option>
-                            <option value="currentmonth">Current Month</option>
+                            <option value="sevendays">7 days</option>
+                            <option value="fifteendays">15 Days</option>
+                            <option value="thirtydays">30 days</option>
                         </select>
                     </div>
                 </form>
@@ -54,7 +50,7 @@
                     </div>
                 </div>
             </div>
-            <div class="card-body">
+            <div class="card-body px-0">
                 @livewire('boards-list')
             </div>
         </div>
@@ -69,7 +65,7 @@
                     </div>
                 </div>
             </div>
-            <div class="card-body">
+            <div class="card-body px-0">
                 @livewire('statuses-list')
             </div>
         </div>

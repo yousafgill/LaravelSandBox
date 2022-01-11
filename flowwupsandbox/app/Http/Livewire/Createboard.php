@@ -17,15 +17,27 @@ class Createboard extends Component
     public $accessType="";
     public $success="";
     public $limitreached="";
-    
+    public $teamurl="";
+
     protected $rules = [
         'name' => 'required|min:3',
-        'slug' => 'required|min:3',
+        'slug' => 'required|min:3|unique:boards,slug',
     ];
+
+    // Validator::make($input, [
+    //     'name' => ['required', 'string', 'max:255'],
+    //     'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+    //     // 'teamname' =>['required','string','unique:teams,name'],
+    //     'password' => $this->passwordRules(),
+    // ])->validate();
 
     public function mount(){
         $this->CheckLimit();
         $this->clearFields();
+        $teamid=Auth::user()->current_team_id;
+        $team=Team::find($teamid);
+        
+        $this->teamurl='http://'.$team->team_slug.'.'. \config('app.appdomain').'/boards/';
     }
     protected function generateSlug($string = null, $separator = "-")
     {

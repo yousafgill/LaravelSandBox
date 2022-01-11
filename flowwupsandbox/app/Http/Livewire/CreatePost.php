@@ -27,6 +27,12 @@ class CreatePost extends Component
     public $success="";
     public $sessionteamid;
     public $sessionteamslug;
+    public $boardcount=0;
+
+    protected $rules = [
+        'board_id' => 'required',
+        'title' => 'required|min:3'
+    ];
 
     public function mount(){
         $this->SetSessionTeamId();
@@ -34,6 +40,8 @@ class CreatePost extends Component
         $this->board_id=$b==null?'':$b->id;
         $this->boards=Board::where('team_id','=',$this->sessionteamid)->get();
         $this->success="";
+        $this->boardcount=$this->boards->count();
+        
     }
     
     public function SetSessionTeamId(){
@@ -68,7 +76,7 @@ class CreatePost extends Component
 
     public function SavePost(){
 
-        //$this->validate();
+        $this->validate();
   
         //Catch this here in case the user changes the Slug after adding in the Board Name
         $this->slug = $this->generateSlug($this->title);

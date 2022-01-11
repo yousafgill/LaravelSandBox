@@ -3,7 +3,7 @@
 namespace App\Http\Middleware;
 
 use Illuminate\Auth\Middleware\Authenticate as Middleware;
-
+use App\Http\Controllers\UserMailController;
 class Authenticate extends Middleware
 {
     /**
@@ -14,8 +14,21 @@ class Authenticate extends Middleware
      */
     protected function redirectTo($request)
     {
-        if (! $request->expectsJson()) {
+        // list($ref)=explode('.',$request->headers->get('referer'),2);
+        // list($host)=explode('.',$request->getHost(),2);
+        // $host='http://'.$host;
+        // $c=Auth::check();
+        // // dd($ref .'---'.$host);
+        // if (! $request->expectsJson()) {
+        //     if($ref == $host){
+        //         return route('login');
+        //     }else{
+        //         return route('loginemail');
+        //     }
+           
+
+        //     // dd($request);
             return route('login');
-        }
+        // }
     }
 }

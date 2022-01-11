@@ -5,6 +5,7 @@ use App\Models\Board;
 use App\Models\status;
 use App\Models\Team;
 use App\Models\Post;
+use Carbon\Carbon;
 class PostList extends Component
 {
         public $posts='';
@@ -26,8 +27,11 @@ class PostList extends Component
         public $sessionteamid;
         public $sessionteamslug;
 
+        public $dateperiod="thirtydays";
+        public $todate;
+
         public function mount(){
-               
+                $this->DateChanged($this->dateperiod);
                 $this->SetSessionTeamId();
                 $this->CheckLimit();
                 $this->boardfilter=Board::oldest()->take($this->boardslimit)->pluck('id')->toArray();
@@ -43,10 +47,38 @@ class PostList extends Component
                         'DateChanged' => 'DateChanged'
                         ];
         public function DateChanged($v){
-                $this->datefilter=$this->convertDateFilter($v);
+                // $this->datefilter=$this->convertDateFilter($v);
+                switch ($v) {
+                        case 'all':
+                            # code...
+                            $this->todate=carbon::createFromTimestamp(0)->toDateTimeString();
+                            break;
+                        case 'today':
+                            # code...
+                            $this->todate=carbon::today()->toDateTimeString();
+                            break;
+                        case 'sevendays':
+                            # code...
+                            $this->todate=carbon::today()->subDays(7);
+                            break;
+                        case 'fifteendays':
+                            # code...
+                            $this->todate=carbon::today()->subDays(15);
+                            break;
+                        case 'thirtydays':
+                            # code...
+                            $this->todate=carbon::today()->subDays(30);
+                            break;
+                        default:
+                            # code...
+                            $this->todate=carbon::today()->toDateTimeString();
+                            break;
+                    }
+                    // dd($this->dateperiod);
+
         }
       
-
+      
         public function SetSessionTeamId(){
         if(session('tenant') !=null){
                 $this->sessionteamslug=session('tenant')->team_slug ;
@@ -180,6 +212,7 @@ class PostList extends Component
         public function render()
         {
                 $this->posts=\DB::table('posts')
+                ->where('posts.created_at','>=', $this->todate) 
                 ->whereIn('posts.board_id',$this->boardfilter)
                 ->whereIn('posts.status_id',$this->statusarray)
                 ->where('posts.detail','like',$this->TextToSearch)

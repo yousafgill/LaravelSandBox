@@ -8,6 +8,7 @@
     <div class="card-body">
         <form wire:submit.prevent="submitForm">
             <fieldset>
+                <x-jet-validation-errors class="mb-4 text-danger" />
                 @if ($limitreached)
                 <div class="alert alert-danger border-0 alert-dismissible">
                     <button type="button" class="close" data-dismiss="alert"><span>×</span></button>
@@ -27,8 +28,12 @@
                 </div>
                 <div class="form-group">
                     <x-jet-label for="slug" class="control-label" value="{{ __('URL') }}" />
-                    <x-jet-input name="slug" id="slug" value="" type="text" class="form-control" wire:model.lazy="slug" autofocus />
-                    <x-jet-label for="slug" class="mt-2" />
+                    <div class="input-group">
+                        <span class="input-group-prepend">
+                            <span class="input-group-text">{{$teamurl}}</span>
+                        </span>
+                        <x-jet-input name="slug" id="slug" value="" type="text" class="form-control" wire:model.lazy="slug" autofocus />
+                    </div>
                 </div>
                 <div class="form-group">
                     <x-jet-label for="accessType" class="control-label" value="{{ __('Visibility') }}" />
